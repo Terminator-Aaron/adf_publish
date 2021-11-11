@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "factoryName": {
-            "value": "AZUSMDA201V"
+            "value": "AZUSMDA301V"
         },
         "dataFactory_location": {
             "value": "southeastasia"
