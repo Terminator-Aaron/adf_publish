@@ -29,7 +29,7 @@
             "location": "[parameters('dataFactory_location')]",
             "identity": {
                 "type": "[parameters('dataFactory_identity_type')]",
-                "principalId": "24499cb9-58c5-4d02-94d7-1b4b5caa70a0",
+                "principalId": "abfcaefa-68dc-4578-947c-96ded3ae653d",
                 "tenantId": "97f55d35-1929-4acf-9c11-d7aaf05b6756"
             }
         }
