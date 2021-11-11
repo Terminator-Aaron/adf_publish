@@ -1,0 +1,676 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        },
+        "Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -5)}"
+        },
+        "Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -3)}"
+        },
+        "Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -3)}"
+        },
+        "Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -3)}"
+        },
+        "Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_cqaupload_properties_pipeline_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowStartTime"
+        },
+        "Trigger_cqaupload_properties_pipeline_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowEndTime"
+        },
+        "Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowStartTime"
+        },
+        "Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowEndTime"
+        },
+        "Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_j47')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_AttunityIMTE",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2020-01-11T20:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_j1t')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_AttuntiyBogieNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2020-01-11T20:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_a3e')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_CompleteWO",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Minute",
+                        "interval": 5,
+                        "startTime": "2020-01-13T09:17:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_brc')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_FitDefitMent",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Minute",
+                        "interval": 3,
+                        "startTime": "2020-01-14T02:53:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_efy')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttnuityFailureCode",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2020-03-16T20:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_syncCmrequest')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_SyncCmRequest",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Minute",
+                        "interval": 3,
+                        "startTime": "2020-04-08T07:03:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_cmTemplate')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_CmTemplate_BlobToCommonServer",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Minute",
+                        "interval": 3,
+                        "startTime": "2020-04-09T08:17:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_cqaupload')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipeline": {
+                    "pipelineReference": {
+                        "referenceName": "CopyPipeline_smd_cqa_upload",
+                        "type": "PipelineReference"
+                    },
+                    "parameters": {
+                        "windowStart": {
+                            "type": "Expression",
+                            "value": "[parameters('Trigger_cqaupload_properties_pipeline_parameters_windowStart')]"
+                        },
+                        "windowEnd": {
+                            "type": "Expression",
+                            "value": "[parameters('Trigger_cqaupload_properties_pipeline_parameters_windowEnd')]"
+                        }
+                    }
+                },
+                "type": "TumblingWindowTrigger",
+                "typeProperties": {
+                    "frequency": "Minute",
+                    "interval": 3,
+                    "startTime": "2020-04-10T06:17:00Z",
+                    "delay": "00:00:00",
+                    "maxConcurrency": 50,
+                    "retryPolicy": {
+                        "intervalInSeconds": 30
+                    },
+                    "dependsOn": []
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_AttunityFailCodeWithEquipNo')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipeline": {
+                    "pipelineReference": {
+                        "referenceName": "CopyPipeline_AttunityFailCodeWithEquipNo",
+                        "type": "PipelineReference"
+                    },
+                    "parameters": {
+                        "windowStart": "[parameters('Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowStart')]",
+                        "windowEnd": "[parameters('Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowEnd')]"
+                    }
+                },
+                "type": "TumblingWindowTrigger",
+                "typeProperties": {
+                    "frequency": "Hour",
+                    "interval": 1,
+                    "startTime": "2020-04-15T05:40:00Z",
+                    "delay": "00:00:00",
+                    "maxConcurrency": 50,
+                    "retryPolicy": {
+                        "intervalInSeconds": 30
+                    },
+                    "dependsOn": []
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_EquipmentClassAssocCode')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_EquipmentClassAssocCode",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-02-01T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_tv9')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttunitySYSGENERICCODE",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-03-10T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_SYS_GENERIC_CODE')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_SYS_GENERIC_CODE",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-03-10T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_StandardJob')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_StandardJob",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-03-15T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_CM_InitialDelaySetting')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_CM_InitialDelaySetting",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-04-28T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_StandardJob_New')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_StandardJob_New",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-03-15T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_SYS_GENERIC_CODE_New')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Stopped",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_SYS_GENERIC_CODE_New",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-03-10T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_Attunity_EquipmentClass')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_Attunity_EquipmentClass",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2021-03-15T23:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}

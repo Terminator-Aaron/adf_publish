@@ -1,0 +1,2227 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -5)}"
+        },
+        "Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_EquipmentClassAssocCode')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_7ar",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_EquipmentClassAssocCode"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select  E2.EQUIP_CLASS_ID, E2.EQUIP_CLASS_CD,\nS.[TYPE] ,\n  S.CODE ,\n  S.DESP \n  from EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE\n JOIN EI_EQUIP_CLASS E2 ON E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table Attunity_EquipmentClassAssocCode"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "Int64",
+                                            "physicalType": "bigint"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "nchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "TYPE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "TYPE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CODE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "CODE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_7ar",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_7ar",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-01-28T09:24:02Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunityEquipmentClassAssocCode')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_jgu",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_EquipmentClassAssocCode"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "Select  E2.EQUIP_CLASS_ID, E2.EQUIP_CLASS_CD,\nS.[TYPE] ,\nS.CODE ,\nS.DESP \nfrom EI_EQUIP_CLASS_ITEMS_ASSOC E1 \nJOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE\nJOIN EI_EQUIP_CLASS E2 ON E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_EquipmentClassAssocCode"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "Int64",
+                                            "physicalType": "bigint"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "nchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "TYPE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "TYPE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CODE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "CODE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_jgu",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_jgu",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-01-29T09:15:12Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_EquipmentClassAssocCode')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_czo",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_EquipmentClassAssocCode"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT\nE1.EQUIP_CLASS_ID,\nE2.EQUIP_CLASS_CD,\nE1.ITEM_TYPE [TYPE],\nS.CODE ,\nS.DESP,\nNULL as ParentCode\nFROM dbo.EI_EQUIP_CLASS_ITEMS_ASSOC E1\nLEFT OUTER JOIN  dbo.EI_EQUIP_CLASS E2 ON E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\nLEFT OUTER JOIN  dbo.SA_SYS_GENERIC_CODE S ON  E1.GC_ITEM_CD = S.CODE AND E1.ITEM_TYPE  = S.TYPE\nWHERE ITEM_TYPE in ( 'IMPACT_CODE','FAILURE_SYMPTOM_CODE','FAILURE_CONSEQUENCE_CODE','FAILURE_CODE','FAILURE_CAUSE_CODE','FAILURE_ACTION_CODE','COMPONENT_CODE') and S.STATUS = 1\nand E1.EQUIP_CLASS_ID is not null",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_EquipmentClassAssocCode"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "Int64",
+                                            "physicalType": "bigint"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "nchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "TYPE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "TYPE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CODE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "CODE",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_EquipmentClassAssocCode",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_EquipmentClassAssocCode",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT\nE1.EQUIP_CLASS_ID,\nE2.EQUIP_CLASS_CD,\nE1.ITEM_TYPE [TYPE],\nS.CODE ,\nS.DESP,\nNULL as ParentCode\nFROM dbo.EI_EQUIP_CLASS_ITEMS_ASSOC E1\nLEFT OUTER JOIN  dbo.EI_EQUIP_CLASS E2 ON E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\nLEFT OUTER JOIN  dbo.SA_SYS_GENERIC_CODE S ON  E1.GC_ITEM_CD = S.CODE AND E1.ITEM_TYPE  = S.TYPE\nWHERE ITEM_TYPE in ( 'IMPACT_CODE','FAILURE_SYMPTOM_CODE','FAILURE_CONSEQUENCE_CODE','FAILURE_CODE','FAILURE_CAUSE_CODE','FAILURE_ACTION_CODE','COMPONENT_CODE') and S.STATUS = 1\nand E1.EQUIP_CLASS_ID is not null",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_EquipmentClassAssocCode",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-06-22T05:20:03Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunitySYSGENERICCODE')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_tv9",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_SYS_GENERIC_CODE"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "  SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "TRUNCATE TABLE dbo.Attunity_SYS_GENERIC_CODE"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "Code",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "Code",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "Name",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "Name",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "Type",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "Type",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ParentCode",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "ParentCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_tv9",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_tv9",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-03-10T08:46:26Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_SYS_GENERIC_CODE')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_ekj",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_SYS_GENERIC_CODE"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "TRUNCATE TABLE Attunity_SYS_GENERIC_CODE"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "Code",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "Code",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "Name",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "Name",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "Type",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "Type",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ParentCode",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "ParentCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_SYS_GENERIC_CODE",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_SYS_GENERIC_CODE",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')\n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_SYS_GENERIC_CODE",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-03-15T06:09:42Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_StandardJob')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_kzo",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_StandardJob"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT Distinct  STD_JOB_CD, STD_JOB_DESP, WK_GRP_CD,GC_WORK_NATURE_LVL1_CD,GC_WORK_NATURE_LVL2_CD,ESTIMATE_JOB_DUR\nFROM xls_v_Standard_Job\nWHERE GC_WORK_NATURE_LVL1_CD in ('CM')\nand WK_GRP_CD like 'MR%' ",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "TRUNCATE TABLE dbo.Attunity_StandardJob"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "StandardJobCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkGroupCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "GC_WORK_NATURE_LVL1_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkNatureLevel1",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "GC_WORK_NATURE_LVL2_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkNatureLevel2",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ESTIMATE_JOB_DUR",
+                                            "type": "Int16",
+                                            "physicalType": "smallint"
+                                        },
+                                        "sink": {
+                                            "name": "EstimateJobDuration",
+                                            "type": "Int32",
+                                            "physicalType": "int"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "StandardJobDesp",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_StandardJob",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_StandardJob",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT Top 1  STD_JOB_CD, STD_JOB_DESP, WK_GRP_CD,GC_WORK_NATURE_LVL1_CD,GC_WORK_NATURE_LVL2_CD,ESTIMATE_JOB_DUR\nFROM xls_v_Standard_Job\nWHERE GC_WORK_NATURE_LVL1_CD in ('CM')\nand WK_GRP_CD like 'MR%' ",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_StandardJob",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-04-19T07:43:03Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_nml')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_nml",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_PM_STD_JOB_PARAM_SET_forTest"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select * from PM_STD_JOB_PARAM_SET",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "BU_ID",
+                                            "type": "Decimal",
+                                            "physicalType": "decimal",
+                                            "scale": 0,
+                                            "precision": 19
+                                        },
+                                        "sink": {
+                                            "name": "BU_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_PARAM_SET_ID",
+                                            "type": "Decimal",
+                                            "physicalType": "decimal",
+                                            "scale": 0,
+                                            "precision": 19
+                                        },
+                                        "sink": {
+                                            "name": "STD_JOB_PARAM_SET_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_PARAM_SET_NAME",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "STD_JOB_PARAM_SET_NAME",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_ID",
+                                            "type": "Decimal",
+                                            "physicalType": "decimal",
+                                            "scale": 0,
+                                            "precision": 19
+                                        },
+                                        "sink": {
+                                            "name": "STD_JOB_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "LAST_UPD_DATETIME",
+                                            "type": "DateTime",
+                                            "physicalType": "datetime2"
+                                        },
+                                        "sink": {
+                                            "name": "LAST_UPD_DATETIME",
+                                            "type": "DateTime",
+                                            "physicalType": "datetime"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "LAST_UPD_USER_ID",
+                                            "type": "Decimal",
+                                            "physicalType": "decimal",
+                                            "scale": 0,
+                                            "precision": 19
+                                        },
+                                        "sink": {
+                                            "name": "LAST_UPD_USER_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "TEMP_EQUIP_CLASS_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "TEMP_EQUIP_CLASS_ID",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_nml",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_nml",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-03-22T02:13:24Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_CM_InitialDelaySetting')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_puk",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_CM_InitialDelaySetting"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT d.[EQUIP_CLASS_CD]\n, c.[CTX_ID1]\n, c.[CTX_ID2]\n, c.[CTX_ID3]\n, c.[CTX_ID4]\nFROM [mmsdb].[dbo].[CO_UDF_SET_ASSOC] a\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_SET] b ON b.UDF_SET_ID = a.UDF_SET_ID\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_ASSOC] c ON c.UDF_ASSOC_ID = b.[UDF_ASSOC_ID]\nLEFT OUTER JOIN [mmsdb].[dbo].[EI_EQUIP_CLASS] d ON c.[CTX_ID1] = CAST(d.EQUIP_CLASS_ID AS CHAR)\nWHERE c.GC_CTX_TYPE_CD = 'WO' AND c.CTX_ID2 <> 'C&R PROJECT WORKS' \nAND a.UDF_ID = (SELECT UDF_ID FROM [mmsdb].[dbo].[CO_UDF_DEF] WHERE UDF_NAME = 'Ref. Initial Delay (min)')\nORDER BY d.EQUIP_CLASS_CD\n",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "TRUNCATE TABLE dbo.Attunity_CM_InitialDelaySetting"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "CTX_ID1",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CTX_ID2",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkNatureLevel1",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CTX_ID3",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkNatureLevel2",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CTX_ID4",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "StandardJobCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_CM_InitialDelaySetting",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_CM_InitialDelaySetting",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT d.[EQUIP_CLASS_CD]\n, c.[CTX_ID1]\n, c.[CTX_ID2]\n, c.[CTX_ID3]\n, c.[CTX_ID4]\nFROM [mmsdb].[dbo].[CO_UDF_SET_ASSOC] a\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_SET] b ON b.UDF_SET_ID = a.UDF_SET_ID\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_ASSOC] c ON c.UDF_ASSOC_ID = b.[UDF_ASSOC_ID]\nLEFT OUTER JOIN [mmsdb].[dbo].[EI_EQUIP_CLASS] d ON c.[CTX_ID1] = CAST(d.EQUIP_CLASS_ID AS CHAR)\nWHERE c.GC_CTX_TYPE_CD = 'WO' AND c.CTX_ID2 <> 'C&R PROJECT WORKS' \nAND a.UDF_ID = (SELECT UDF_ID FROM [mmsdb].[dbo].[CO_UDF_DEF] WHERE UDF_NAME = 'Ref. Initial Delay (min)')\nORDER BY d.EQUIP_CLASS_CD\n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_CM_InitialDelaySetting",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-04-28T08:36:22Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_StandardJob_New')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_kzo",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_StandardJob"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT Distinct  STD_JOB_CD, STD_JOB_DESP, WK_GRP_CD,GC_WORK_NATURE_LVL1_CD,GC_WORK_NATURE_LVL2_CD,ESTIMATE_JOB_DUR\nFROM xls_v_Standard_Job\nWHERE GC_WORK_NATURE_LVL1_CD in ('CM')",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "TRUNCATE TABLE dbo.Attunity_StandardJob"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "StandardJobCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkGroupCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "GC_WORK_NATURE_LVL1_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkNatureLevel1",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "GC_WORK_NATURE_LVL2_CD",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "WorkNatureLevel2",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ESTIMATE_JOB_DUR",
+                                            "type": "Int16",
+                                            "physicalType": "smallint"
+                                        },
+                                        "sink": {
+                                            "name": "EstimateJobDuration",
+                                            "type": "Int32",
+                                            "physicalType": "int"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "StandardJobDesp",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_StandardJob_New",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_StandardJob_New",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT Top 1  STD_JOB_CD, STD_JOB_DESP, WK_GRP_CD,GC_WORK_NATURE_LVL1_CD,GC_WORK_NATURE_LVL2_CD,ESTIMATE_JOB_DUR\nFROM xls_v_Standard_Job\nWHERE GC_WORK_NATURE_LVL1_CD in ('CM')",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_StandardJob_New",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-07-12T07:02:50Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_SYS_GENERIC_CODE_New')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_ekj",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_SYS_GENERIC_CODE"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "TRUNCATE TABLE Attunity_SYS_GENERIC_CODE"
+                            },
+                            "enableStaging": false,
+                            "validateDataConsistency": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "Code",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "Code",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "Name",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "Name",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "Type",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "Type",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "ParentCode",
+                                            "type": "String",
+                                            "physicalType": "varchar"
+                                        },
+                                        "sink": {
+                                            "name": "ParentCode",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String",
+                                            "physicalType": "nvarchar"
+                                        }
+                                    }
+                                ],
+                                "typeConversion": true,
+                                "typeConversionSettings": {
+                                    "allowDataTruncation": true,
+                                    "treatBooleanAsNumber": false
+                                }
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_SYS_GENERIC_CODE_New",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_SYS_GENERIC_CODE_New",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')\n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_SYS_GENERIC_CODE_New",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-07-12T07:50:14Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_Attunity_EquipmentClass')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_EquipCLass",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_EquipmentClass"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select EQUIP_CLASS_ID, EQUIP_CLASS_CD from EI_EQUIP_CLASS",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_EquipmentClass",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "Int64"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_ID",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_Attunity_EquipmentClass",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_Attunity_EquipmentClass",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select EQUIP_CLASS_ID, EQUIP_CLASS_CD from EI_EQUIP_CLASS",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_Attunity_EquipmentClass",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-10-21T06:51:59Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_AttunityMaterData')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttunityAxleNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowEnd')]"
+                        }
+                    },
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttunityCarNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowEnd')]"
+                        }
+                    },
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttunityEquipmentNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd')]"
+                        }
+                    },
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttuntiyBogieNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2019-09-09T12:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_y3d')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_AttunityIMTE",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2019-09-27T12:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_esd')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_CompleteWO",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Minute",
+                        "interval": 5,
+                        "startTime": "2019-09-27T12:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_AzureBlobStorageBackUp')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_BackUpAzureStorage",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2019-11-21T01:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_j61')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_WorkGroup",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2019-12-12T08:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_h3m')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_Workgroup",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2020-01-09T00:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_mwk')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_AttunityAxleNo_CopyPipeline",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2020-01-11T20:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_so7')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_AttunityCarNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2020-01-11T20:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_hzv')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "Phase2A_CopyPipeline_AttunityEquipmentNo",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {
+                            "windowStart": "[parameters('Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowStart')]",
+                            "windowEnd": "[parameters('Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd')]"
+                        }
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 12,
+                        "startTime": "2020-01-11T20:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}

@@ -1,0 +1,846 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_AttunityFailCodeWithEquipNo')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "FAILURE_CODE",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "FAILURE_CODE_TYPE",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_NO",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_FailueCodeWithEquipNo"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_xal')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2A_AzureBlobStorage_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "smd-cmuploadworkorderfile"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_8n8')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2A_AzureBlobStorage_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "smd-cmuploadworkorderfile"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_7ar')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "nchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TYPE",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CODE",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_EquipmentClassAssocCode"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_jgu')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "nchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TYPE",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "CODE",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_EquipmentClassAssocCode"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_tv9')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Code",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Name",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Type",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ParentCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_SYS_GENERIC_CODE"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_SYS_GENERIC_CODE')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Code",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Name",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Type",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ParentCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_SYS_GENERIC_CODE"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_StandardJob')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "StandardJobCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "StandardJobDesp",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkGroupCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkNatureLevel1",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkNatureLevel2",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EstimateJobDuration",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_StandardJob"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_nml')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "BU_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "STD_JOB_PARAM_SET_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "STD_JOB_PARAM_SET_NAME",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "STD_JOB_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "LAST_UPD_DATETIME",
+                        "type": "datetime",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "LAST_UPD_USER_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TEMP_EQUIP_CLASS_ID",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_PM_STD_JOB_PARAM_SET_forTest"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_CM_InitialDelaySetting')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "varchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkNatureLevel1",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkNatureLevel2",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "StandardJobCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_CM_InitialDelaySetting"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_StandardJob_New')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "StandardJobCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "StandardJobDesp",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkGroupCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkNatureLevel1",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkNatureLevel2",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "EstimateJobDuration",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_StandardJob"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_SYS_GENERIC_CODE_New')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Code",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Name",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "Type",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "ParentCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_SYS_GENERIC_CODE"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_EquipmentClass')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Phase2B_SQL_Server_SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_EquipmentClass"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_2pp')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "BogieNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_ab8')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "AxleNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_qtp')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "CarNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_hou')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EquipmentNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_y3d')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EQUIP_NO",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_DESP",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_CLASS_DESP",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_ID",
+                        "type": "bigint",
+                        "precision": 19,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PLAN_START_DATE",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 7
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_AzureBS')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorageSIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "smd-workorderfile"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_esd')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CommonServer",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "CompleteWO/New"
+                    }
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}

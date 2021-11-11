@@ -1,0 +1,681 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_mi3')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorageSIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Json",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "temp"
+                    }
+                },
+                "schema": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_OriginBlob')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "AzureBlobStorageSIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "AzureBlobStorageLocation",
+                        "container": "root"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_j61')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkGroupNo",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    },
+                    {
+                        "name": "WorkGroupCode",
+                        "type": "nvarchar",
+                        "precision": 0,
+                        "scale": 0
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_WorkGroup"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_j61')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "WK_GRP_ID",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_h3m')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "WK_GRP_ID",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_mwk')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "AxleNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_so7')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "CarNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_hzv')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EquipmentNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_j47')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EQUIP_NO",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_DESP",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_CLASS_DESP",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_ID",
+                        "type": "bigint",
+                        "precision": 19,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PLAN_START_DATE",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 7
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_j1t')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "BogieNo",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_a3e')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Common Server",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "CompleteWO/New"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_brc')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Common Server",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "UpdateFitmentDefitment/New"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_efy')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "FAILURE_CODE",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "FAILURE_CODE_TYPE",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_syncCmrequest')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "Common Server",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "CreateCMWO/To_ADF"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_cmTemplate_CommonServer')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CommonServer",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "CreateCMWO/New"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_cqaupload')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CommonServer",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "InterfaceServerBatchJob/CAQUpload/Upload"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_AttunityFailCodeWithEquipNo')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "FAILURE_CODE",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "FAILURE_CODE_TYPE",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_NO",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_async_workorder')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "WO_NO",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WO_DESP",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_ID",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_NAME",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PLAN_START_DATE",
+                        "type": "datetime",
+                        "precision": 23,
+                        "scale": 3
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LV1_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LV2_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "STD_JOB_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_NO",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "LOC_ID",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "LOC_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_WorkOrder_ForTest"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_async_workorder')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "WO_NO",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WO_DESP",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_ID",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "WK_GRP_NAME",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "PLAN_START_DATE",
+                        "type": "datetime2",
+                        "precision": 255,
+                        "scale": 7
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LV1_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LV2_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "STD_JOB_CD",
+                        "type": "nvarchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_NO",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    },
+                    {
+                        "name": "LOC_ID",
+                        "type": "bigint",
+                        "precision": 19,
+                        "scale": 255
+                    },
+                    {
+                        "name": "LOC_CD",
+                        "type": "varchar",
+                        "precision": 255,
+                        "scale": 255
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_xal')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CommonServer",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "CreateCMWO/New"
+                    }
+                }
+            },
+            "dependsOn": []
+        }
+    ]
+}

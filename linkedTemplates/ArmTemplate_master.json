@@ -1,0 +1,707 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        },
+        "SqlServer1_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SqlServer1'"
+        },
+        "SqlServer1_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'SqlServer1'"
+        },
+        "SIT_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'SIT'"
+        },
+        "AzureBlobStorageSIT_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorageSIT'"
+        },
+        "Common Server_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'Common Server'"
+        },
+        "CommonServer_password": {
+            "type": "secureString",
+            "metadata": "Secure string for 'password' of 'CommonServer'"
+        },
+        "CosmosDb1_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'CosmosDb1'"
+        },
+        "AzureBlobStorageBackUp_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'AzureBlobStorageBackUp'"
+        },
+        "Phase2A_SQL_Server_SIT_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'Phase2A_SQL_Server_SIT'"
+        },
+        "Phase2A_AzureBlobStorage_SIT_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'Phase2A_AzureBlobStorage_SIT'"
+        },
+        "Phase2B_SQL_Server_SIT_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'Phase2B_SQL_Server_SIT'"
+        },
+        "DEV_connectionString": {
+            "type": "secureString",
+            "metadata": "Secure string for 'connectionString' of 'DEV'"
+        },
+        "SharedIntegrationRuntime_properties_typeProperties_linkedInfo_resourceId": {
+            "type": "string",
+            "defaultValue": "/subscriptions/1e984346-edba-4a2c-8888-cf0f668bea68/resourcegroups/EDP_Testing/providers/Microsoft.DataFactory/factories/AZUEDPA204V/integrationruntimes/AZUEDPA201V"
+        },
+        "SqlServer1_properties_typeProperties_userName": {
+            "type": "string",
+            "defaultValue": "MTRCORP\\Smdtdbu"
+        },
+        "AzureKeyVault_properties_typeProperties_baseUrl": {
+            "type": "string",
+            "defaultValue": "https://azusmda202v.vault.azure.net/"
+        },
+        "Common Server_properties_typeProperties_host": {
+            "type": "string",
+            "defaultValue": "\\\\Twdsmda201v\\smdm"
+        },
+        "Common Server_properties_typeProperties_userId": {
+            "type": "string",
+            "defaultValue": "mtrcorp\\smdtintf"
+        },
+        "CommonServer_properties_typeProperties_host": {
+            "type": "string",
+            "defaultValue": "\\\\Twdsmda201v\\smdm"
+        },
+        "CommonServer_properties_typeProperties_userId": {
+            "type": "string",
+            "defaultValue": "mtrcorp\\smdtintf"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "2019-09-09"
+        },
+        "Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "2029-09-09"
+        },
+        "Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -5)}"
+        },
+        "Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -24)}"
+        },
+        "Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -5)}"
+        },
+        "Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -3)}"
+        },
+        "Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -3)}"
+        },
+        "Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addminutes(trigger().scheduledTime, -3)}"
+        },
+        "Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_cqaupload_properties_pipeline_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowStartTime"
+        },
+        "Trigger_cqaupload_properties_pipeline_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowEndTime"
+        },
+        "Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowStartTime"
+        },
+        "Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().outputs.windowEndTime"
+        },
+        "Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowStart": {
+            "type": "string",
+            "defaultValue": "@{addhours(trigger().scheduledTime, -12)}"
+        },
+        "Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowEnd": {
+            "type": "string",
+            "defaultValue": "@trigger().scheduledTime"
+        },
+        "containerUri": {
+            "type": "string",
+            "metadata": "URI to storage account containing linked ARM templates"
+        },
+        "containerSasToken": {
+            "type": "string",
+            "metadata": "Sas token to storage account containing linked ARM templates"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "AZUSMDA201V_ArmTemplate_0",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "CosmosDb1_connectionString": {
+                        "value": "[parameters('CosmosDb1_connectionString')]"
+                    },
+                    "AzureBlobStorageBackUp_connectionString": {
+                        "value": "[parameters('AzureBlobStorageBackUp_connectionString')]"
+                    },
+                    "Phase2A_SQL_Server_SIT_connectionString": {
+                        "value": "[parameters('Phase2A_SQL_Server_SIT_connectionString')]"
+                    },
+                    "Phase2A_AzureBlobStorage_SIT_connectionString": {
+                        "value": "[parameters('Phase2A_AzureBlobStorage_SIT_connectionString')]"
+                    },
+                    "Phase2B_SQL_Server_SIT_connectionString": {
+                        "value": "[parameters('Phase2B_SQL_Server_SIT_connectionString')]"
+                    },
+                    "SqlServer1_connectionString": {
+                        "value": "[parameters('SqlServer1_connectionString')]"
+                    },
+                    "SqlServer1_password": {
+                        "value": "[parameters('SqlServer1_password')]"
+                    },
+                    "SIT_connectionString": {
+                        "value": "[parameters('SIT_connectionString')]"
+                    },
+                    "AzureBlobStorageSIT_connectionString": {
+                        "value": "[parameters('AzureBlobStorageSIT_connectionString')]"
+                    },
+                    "Common Server_password": {
+                        "value": "[parameters('Common Server_password')]"
+                    },
+                    "CommonServer_password": {
+                        "value": "[parameters('CommonServer_password')]"
+                    },
+                    "DEV_connectionString": {
+                        "value": "[parameters('DEV_connectionString')]"
+                    },
+                    "SharedIntegrationRuntime_properties_typeProperties_linkedInfo_resourceId": {
+                        "value": "[parameters('SharedIntegrationRuntime_properties_typeProperties_linkedInfo_resourceId')]"
+                    },
+                    "AzureKeyVault_properties_typeProperties_baseUrl": {
+                        "value": "[parameters('AzureKeyVault_properties_typeProperties_baseUrl')]"
+                    },
+                    "SqlServer1_properties_typeProperties_userName": {
+                        "value": "[parameters('SqlServer1_properties_typeProperties_userName')]"
+                    },
+                    "Common Server_properties_typeProperties_host": {
+                        "value": "[parameters('Common Server_properties_typeProperties_host')]"
+                    },
+                    "Common Server_properties_typeProperties_userId": {
+                        "value": "[parameters('Common Server_properties_typeProperties_userId')]"
+                    },
+                    "CommonServer_properties_typeProperties_host": {
+                        "value": "[parameters('CommonServer_properties_typeProperties_host')]"
+                    },
+                    "CommonServer_properties_typeProperties_userId": {
+                        "value": "[parameters('CommonServer_properties_typeProperties_userId')]"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_1",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_0')]"
+            ]
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_2",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_1')]"
+            ]
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_3",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_3.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_2')]"
+            ]
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_4",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_4.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_3')]"
+            ]
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_5",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_5.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_4')]"
+            ]
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_6",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_6.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowStart')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityAxleNo_parameters_windowEnd')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowStart')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityCarNo_parameters_windowEnd')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowStart')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowStart')]"
+                    },
+                    "Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_AttunityMaterData_properties_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd')]"
+                    },
+                    "Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowStart": {
+                        "value": "[parameters('Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowStart')]"
+                    },
+                    "Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_y3d_properties_CopyPipeline_AttunityIMTE_parameters_windowEnd')]"
+                    },
+                    "Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowStart": {
+                        "value": "[parameters('Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowStart')]"
+                    },
+                    "Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_esd_properties_CopyPipeline_CompleteWO_parameters_windowEnd')]"
+                    },
+                    "Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowStart": {
+                        "value": "[parameters('Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowStart')]"
+                    },
+                    "Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_AzureBlobStorageBackUp_properties_CopyPipeline_BackUpAzureStorage_parameters_windowEnd')]"
+                    },
+                    "Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowStart": {
+                        "value": "[parameters('Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowStart')]"
+                    },
+                    "Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_j61_properties_CopyPipeline_WorkGroup_parameters_windowEnd')]"
+                    },
+                    "Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowStart": {
+                        "value": "[parameters('Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowStart')]"
+                    },
+                    "Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_h3m_properties_Phase2A_CopyPipeline_Workgroup_parameters_windowEnd')]"
+                    },
+                    "Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowStart": {
+                        "value": "[parameters('Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowStart')]"
+                    },
+                    "Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_mwk_properties_Phase2A_AttunityAxleNo_CopyPipeline_parameters_windowEnd')]"
+                    },
+                    "Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowStart')]"
+                    },
+                    "Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_so7_properties_Phase2A_CopyPipeline_AttunityCarNo_parameters_windowEnd')]"
+                    },
+                    "Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowStart')]"
+                    },
+                    "Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_hzv_properties_Phase2A_CopyPipeline_AttunityEquipmentNo_parameters_windowEnd')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_5')]"
+            ]
+        },
+        {
+            "name": "AZUSMDA201V_ArmTemplate_7",
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-02-01",
+            "properties": {
+                "mode": "incremental",
+                "templateLink": {
+                    "uri": "[concat(parameters('containerUri'), '/ArmTemplate_7.json', parameters('containerSasToken'))]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "factoryName": {
+                        "value": "[parameters('factoryName')]"
+                    },
+                    "Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowStart": {
+                        "value": "[parameters('Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowStart')]"
+                    },
+                    "Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_j47_properties_Phase2A_CopyPipeline_AttunityIMTE_parameters_windowEnd')]"
+                    },
+                    "Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowStart": {
+                        "value": "[parameters('Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowStart')]"
+                    },
+                    "Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_j1t_properties_Phase2A_CopyPipeline_AttuntiyBogieNo_parameters_windowEnd')]"
+                    },
+                    "Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowStart": {
+                        "value": "[parameters('Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowStart')]"
+                    },
+                    "Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_a3e_properties_Phase2A_CopyPipeline_CompleteWO_parameters_windowEnd')]"
+                    },
+                    "Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowStart": {
+                        "value": "[parameters('Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowStart')]"
+                    },
+                    "Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_brc_properties_Phase2A_CopyPipeline_FitDefitMent_parameters_windowEnd')]"
+                    },
+                    "Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowStart": {
+                        "value": "[parameters('Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowStart')]"
+                    },
+                    "Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_efy_properties_CopyPipeline_AttnuityFailureCode_parameters_windowEnd')]"
+                    },
+                    "Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowStart": {
+                        "value": "[parameters('Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowStart')]"
+                    },
+                    "Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_syncCmrequest_properties_CopyPipeline_SyncCmRequest_parameters_windowEnd')]"
+                    },
+                    "Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowStart": {
+                        "value": "[parameters('Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowStart')]"
+                    },
+                    "Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_cmTemplate_properties_CopyPipeline_CmTemplate_BlobToCommonServer_parameters_windowEnd')]"
+                    },
+                    "Trigger_cqaupload_properties_pipeline_parameters_windowStart": {
+                        "value": "[parameters('Trigger_cqaupload_properties_pipeline_parameters_windowStart')]"
+                    },
+                    "Trigger_cqaupload_properties_pipeline_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_cqaupload_properties_pipeline_parameters_windowEnd')]"
+                    },
+                    "Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowStart": {
+                        "value": "[parameters('Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowStart')]"
+                    },
+                    "Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_AttunityFailCodeWithEquipNo_properties_pipeline_parameters_windowEnd')]"
+                    },
+                    "Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowStart": {
+                        "value": "[parameters('Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowStart')]"
+                    },
+                    "Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_Attunity_EquipmentClassAssocCode_properties_CopyPipeline_Attunity_EquipmentClassAssocCode_parameters_windowEnd')]"
+                    },
+                    "Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowStart": {
+                        "value": "[parameters('Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowStart')]"
+                    },
+                    "Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_tv9_properties_CopyPipeline_AttunitySYSGENERICCODE_parameters_windowEnd')]"
+                    },
+                    "Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowStart": {
+                        "value": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowStart')]"
+                    },
+                    "Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_parameters_windowEnd')]"
+                    },
+                    "Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowStart": {
+                        "value": "[parameters('Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowStart')]"
+                    },
+                    "Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_Attunity_StandardJob_properties_CopyPipeline_Attunity_StandardJob_parameters_windowEnd')]"
+                    },
+                    "Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowStart": {
+                        "value": "[parameters('Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowStart')]"
+                    },
+                    "Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_Attunity_CM_InitialDelaySetting_properties_CopyPipeline_Attunity_CM_InitialDelaySetting_parameters_windowEnd')]"
+                    },
+                    "Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowStart": {
+                        "value": "[parameters('Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowStart')]"
+                    },
+                    "Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_Attunity_StandardJob_New_properties_CopyPipeline_Attunity_StandardJob_New_parameters_windowEnd')]"
+                    },
+                    "Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowStart": {
+                        "value": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowStart')]"
+                    },
+                    "Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowEnd": {
+                        "value": "[parameters('Trigger_Attunity_SYS_GENERIC_CODE_New_properties_CopyPipeline_Attunity_SYS_GENERIC_CODE_New_parameters_windowEnd')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/deployments', 'AZUSMDA201V_ArmTemplate_6')]"
+            ]
+        }
+    ]
+}

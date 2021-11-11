@@ -1,0 +1,1370 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_CosmosDBBackUp')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_5u7",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "FormJsonData"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "cosmosdbbakup//"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "CosmosDbSqlApiSource",
+                                "preferredRegions": []
+                            },
+                            "sink": {
+                                "type": "JsonSink",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageWriteSettings"
+                                },
+                                "formatSettings": {
+                                    "type": "JsonWriteSettings",
+                                    "filePattern": "setOfObjects"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_5u7",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_5u7",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-11-21T01:57:04Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_8n8')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "CommonServer",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "Binary",
+                "typeProperties": {
+                    "location": {
+                        "type": "FileServerLocation",
+                        "folderPath": "CreateCMWO/New"
+                    }
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_7ar')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_jgu')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/DestinationDataset_Attunity_EquipmentClassAssocCode')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SIT",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "AzureSqlTable",
+                "schema": [
+                    {
+                        "name": "ID",
+                        "type": "int",
+                        "precision": 10
+                    },
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "nchar"
+                    },
+                    {
+                        "name": "TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "Attunity_EquipmentClassAssocCode"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_EquipmentClassAssocCode')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "TYPE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "CODE",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_tv9')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "Code",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Name",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Type",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ParentCode",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_SYS_GENERIC_CODE')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "Code",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Name",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Type",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ParentCode",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_StandardJob')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "STD_JOB_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STD_JOB_DESP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WK_GRP_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LVL1_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LVL2_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ESTIMATE_JOB_DUR",
+                        "type": "smallint",
+                        "precision": 5
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_nml')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "BU_ID",
+                        "type": "decimal",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "STD_JOB_PARAM_SET_ID",
+                        "type": "decimal",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "STD_JOB_PARAM_SET_NAME",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STD_JOB_ID",
+                        "type": "decimal",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "LAST_UPD_DATETIME",
+                        "type": "datetime2",
+                        "scale": 7
+                    },
+                    {
+                        "name": "LAST_UPD_USER_ID",
+                        "type": "decimal",
+                        "precision": 19,
+                        "scale": 0
+                    },
+                    {
+                        "name": "TEMP_EQUIP_CLASS_ID",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_CM_InitialDelaySetting')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "CTX_ID1",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "CTX_ID2",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "CTX_ID3",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "CTX_ID4",
+                        "type": "varchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_StandardJob_New')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "STD_JOB_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "STD_JOB_DESP",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "WK_GRP_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LVL1_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "GC_WORK_NATURE_LVL2_CD",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "ESTIMATE_JOB_DUR",
+                        "type": "smallint",
+                        "precision": 5
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_SYS_GENERIC_CODE_New')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "Code",
+                        "type": "nvarchar"
+                    },
+                    {
+                        "name": "Name",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "Type",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ParentCode",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "DESP",
+                        "type": "nvarchar"
+                    }
+                ],
+                "typeProperties": {}
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/SourceDataset_Attunity_EquipmentClass')]",
+            "type": "Microsoft.DataFactory/factories/datasets",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "linkedServiceName": {
+                    "referenceName": "SqlServer1",
+                    "type": "LinkedServiceReference"
+                },
+                "annotations": [],
+                "type": "SqlServerTable",
+                "schema": [
+                    {
+                        "name": "BU_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "EQUIP_CLASS_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "EQUIP_CLASS_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ALIAS_MANDATORY_IND",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "GC_EQUIP_CLASS_TYPE_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "EQUIP_CLASS_DESP",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "FUNCTIONAL_UNIT_IND",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "GC_SAFETY_CRITICAL_LEVEL_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "GC_SERVICE_CRITICAL_LEVEL_CD",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ASSET_OWNER",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "CUSTODIAN",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "OPERATOR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "MAINTAIN_WK_GRP_ID",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "VENDOR",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "OEM",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LOC_RANGE_IND",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "ANTICIPATED_LIFE_SPAN",
+                        "type": "decimal",
+                        "precision": 6,
+                        "scale": 2
+                    },
+                    {
+                        "name": "DEFAULT_PARENT_CLASS_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "GC_CLASS_GRP_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "NORMAL_OPER_START_MINUTES",
+                        "type": "decimal",
+                        "precision": 10,
+                        "scale": 2
+                    },
+                    {
+                        "name": "NORMAL_OPER_END_MINUTES",
+                        "type": "decimal",
+                        "precision": 10,
+                        "scale": 2
+                    },
+                    {
+                        "name": "RESERVED_FIELD1",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RESERVED_FIELD2",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "RESERVED_FIELD3",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "STATUS",
+                        "type": "varchar"
+                    },
+                    {
+                        "name": "LAST_UPD_USER_ID",
+                        "type": "bigint",
+                        "precision": 19
+                    },
+                    {
+                        "name": "LAST_UPD_DATETIME",
+                        "type": "datetime2",
+                        "scale": 6
+                    }
+                ],
+                "typeProperties": {
+                    "schema": "dbo",
+                    "table": "EI_EQUIP_CLASS"
+                }
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Trigger_5u7')]",
+            "type": "Microsoft.DataFactory/factories/triggers",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "annotations": [],
+                "runtimeState": "Started",
+                "pipelines": [
+                    {
+                        "pipelineReference": {
+                            "referenceName": "CopyPipeline_CosmosDBBackUp",
+                            "type": "PipelineReference"
+                        },
+                        "parameters": {}
+                    }
+                ],
+                "type": "ScheduleTrigger",
+                "typeProperties": {
+                    "recurrence": {
+                        "frequency": "Hour",
+                        "interval": 24,
+                        "startTime": "2019-11-21T02:00:00Z",
+                        "timeZone": "UTC"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat(variables('factoryId'), '/pipelines/CopyPipeline_CosmosDBBackUp')]"
+            ]
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttuntiyBogieNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_2pp",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Bogie"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS BogieNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%BOGIE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Bogie"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "BogieNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "BogieNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_2pp",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_2pp",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS BogieNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%BOGIE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_2pp",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-05-04T06:20:43Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunityAxleNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_ab8",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Axle"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS AxleNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%AXLE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n\n\n",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Axle"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "AxleNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "AxleNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_ab8",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_ab8",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS AxleNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%AXLE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n\n\n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_ab8",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2021-04-29T10:13:23Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunityCarNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_qtp",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Cart"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS CarNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUY-SS%' ORDER BY EQUIP_NO;",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Cart"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "CarNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CarNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_qtp",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_qtp",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS CarNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUY-SS%' ORDER BY EQUIP_NO;",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_qtp",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-08-31T06:14:41Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunityEquipmentNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_hou",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Equipment"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS EquipmentNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUYS-%' ORDER BY EQUIP_NO;",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Equipment"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EquipmentNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EquipmentNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_hou",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_hou",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS EquipmentNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUYS-%' ORDER BY EQUIP_NO;",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_hou",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-08-31T06:16:30Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunityIMTE')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_y3d",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_IMTE"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "WITH CTE1 AS (\n  SELECT\n    V.EQUIP_NO,\n    V.EQUIP_CLASS_CD,\n    V.EQUIP_DESP, \n    V.EQUIP_CLASS_DESP, \n    E.EQUIP_ID\n  FROM\n    xls_v_Equipment_Registration V\n    inner join EI_EQUIPMENT E on E.EQUIP_NO = V.EQUIP_NO\n  WHERE\n    (\n      (\n        V.EQUIP_CLASS_CD LIKE 'MST%'\n        AND V.EQUIP_NO LIKE 'EI%'\n      )\n      OR (\n        V.EQUIP_CLASS_CD LIKE 'MSI%'\n        AND (\n          V.EQUIP_NO LIKE 'WIX%'\n          OR V.EQUIP_NO LIKE 'WIY%'\n        )\n      )\n    )\n), CTE2 AS (\n  SELECT \n    MIN(W.PLAN_START_DATE) AS PLAN_START_DATE, \n    W.EQUIP_ID\n  FROM\n    WM_WORK_ORDER W \n    left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\n    inner join CTE1 C1 on C1.EQUIP_ID = W.EQUIP_ID\n  WHERE\n    W.CREATE_DATE >= DATEADD(MONTH, -12, GETDATE())\n    and S.WK_GRP_ID in (\n      SELECT\n        WK_GRP_ID \n      FROM \n        SA_WORK_GRP \n      WHERE \n        WK_GRP_CD like 'MR%'\n    )\n    and W.STATUS = 'OP'\n    --and W.PLAN_START_DATE >= GETDATE()\n  GROUP BY\n    W.EQUIP_ID\n)\nSELECT\n  C1.*, \n  C2.PLAN_START_DATE\nFROM\n  CTE1 C1 \n  left join CTE2 C2 on C2.EQUIP_ID = C1.EQUIP_ID\nWHERE\nC1.EQUIP_NO is not null\nORDER BY\n  C1.EQUIP_NO",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table [dbo].[Attunity_IMTE]"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_DESP",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_DESP",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_ID",
+                                            "type": "Int64"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_ID",
+                                            "type": "Int64"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "PLAN_START_DATE",
+                                            "type": "DateTime"
+                                        },
+                                        "sink": {
+                                            "name": "PLAN_START_DATE",
+                                            "type": "DateTime"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_DESP",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_DESP",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_y3d",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_y3d",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "WITH CTE1 AS (\n  SELECT\n    V.EQUIP_NO,\n    V.EQUIP_CLASS_CD,\n    V.EQUIP_DESP, \n    V.EQUIP_CLASS_DESP, \n    E.EQUIP_ID\n  FROM\n    xls_v_Equipment_Registration V\n    inner join EI_EQUIPMENT E on E.EQUIP_NO = V.EQUIP_NO\n  WHERE\n    (\n      (\n        V.EQUIP_CLASS_CD LIKE 'MST%'\n        AND V.EQUIP_NO LIKE 'EI%'\n      )\n      OR (\n        V.EQUIP_CLASS_CD LIKE 'MSI%'\n        AND (\n          V.EQUIP_NO LIKE 'WIX%'\n          OR V.EQUIP_NO LIKE 'WIY%'\n        )\n      )\n    )\n), CTE2 AS (\n  SELECT \n    MIN(W.PLAN_START_DATE) AS PLAN_START_DATE, \n    W.EQUIP_ID\n  FROM\n    WM_WORK_ORDER W \n    left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\n    inner join CTE1 C1 on C1.EQUIP_ID = W.EQUIP_ID\n  WHERE\n    W.CREATE_DATE >= DATEADD(MONTH, -12, GETDATE())\n    and S.WK_GRP_ID in (\n      SELECT\n        WK_GRP_ID \n      FROM \n        SA_WORK_GRP \n      WHERE \n        WK_GRP_CD like 'MR%'\n    )\n    and W.STATUS = 'OP'\n    --and W.PLAN_START_DATE >= GETDATE()\n  GROUP BY\n    W.EQUIP_ID\n)\nSELECT\n  C1.*, \n  C2.PLAN_START_DATE\nFROM\n  CTE1 C1 \n  left join CTE2 C2 on C2.EQUIP_ID = C1.EQUIP_ID\nWHERE\nC1.EQUIP_NO is not null\nORDER BY\n  C1.EQUIP_NO",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_y3d",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-08-31T06:18:42Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}

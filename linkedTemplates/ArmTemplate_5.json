@@ -1,0 +1,2075 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "factoryName": {
+            "type": "string",
+            "metadata": "Data Factory name",
+            "defaultValue": "AZUSMDA201V"
+        }
+    },
+    "variables": {
+        "factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+    },
+    "resources": [
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_CompleteWO')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_esd",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-workorderfile//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "CompleteWO/New/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*.*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings",
+                                    "copyBehavior": "PreserveHierarchy"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_AzureBS",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_esd",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-09-28T02:17:48Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_mi3')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_mi3",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "FormJsonData"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "temp//"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "CosmosDbSqlApiSource",
+                                "preferredRegions": []
+                            },
+                            "sink": {
+                                "type": "JsonSink",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageWriteSettings"
+                                },
+                                "formatSettings": {
+                                    "type": "JsonWriteSettings",
+                                    "filePattern": "setOfObjects"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_mi3",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_mi3",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-11-14T06:41:32Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_BackUpAzureStorage')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_bq6",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "root//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "root//"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_OriginBlob",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_DestinationBlob",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2019-11-21T01:51:10Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_WorkGroup')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_j61",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_WorkGroup"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select WK_GRP_ID, WK_GRP_CD from SA_WORK_GRP Where WK_GRP_CD like 'MR%' \n or WK_GRP_CD like  'CR%'  or WK_GRP_CD like  'MO%'   order by WK_GRP_CD desc",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_WorkGroup"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_ID",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WorkGroupNo",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WorkGroupCode",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_j61",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_j61",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-12-01T09:30:29Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_Workgroup')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_h3m",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_WorkGroup"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "select WK_GRP_ID, WK_GRP_CD from SA_WORK_GRP Where WK_GRP_CD like 'MR%' \n or  WK_GRP_CD like 'CR%' order by WK_GRP_CD  desc",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_WorkGroup"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_ID",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WorkGroupNo",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WorkGroupCode",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_h3m",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_h3m",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-09T07:32:39Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_AttunityAxleNo_CopyPipeline')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_mwk",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Axle"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT(E3.EQUIP_NO) AS AxleNo FROM EI_EQUIP_STRT E1,EI_EQUIPMENT E2,EI_EQUIPMENT E3,EI_EQUIP_CLASS E4 WHERE E1.PARENT_EQUIP_ID = E2.EQUIP_ID AND E1.EQUIP_ID = E3.EQUIP_ID AND E4.EQUIP_CLASS_ID = E3.EQUIP_CLASS_ID AND E4.EQUIP_CLASS_CD LIKE 'EMUYS-%' AND E4.EQUIP_CLASS_CD LIKE '%AXLE%'",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Axle"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "AxleNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "AxleNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_mwk",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_mwk",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-11T04:20:29Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_AttunityCarNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_so7",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Cart"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS CarNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUY-SS%' ORDER BY EQUIP_NO;",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Cart"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "CarNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "CarNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_so7",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_so7",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-11T04:22:57Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_AttunityEquipmentNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_hzv",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Equipment"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS EquipmentNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUYS-%' ORDER BY EQUIP_NO;",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Equipment"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EquipmentNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EquipmentNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_hzv",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_hzv",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-11T04:26:47Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_AttunityIMTE')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_j47",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_IMTE"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "WITH CTE1 AS (\n  SELECT\n    V.EQUIP_NO,\n    V.EQUIP_CLASS_CD,\n    V.EQUIP_DESP, \n    V.EQUIP_CLASS_DESP, \n    E.EQUIP_ID\n  FROM\n    xls_v_Equipment_Registration V\n    inner join EI_EQUIPMENT E on E.EQUIP_NO = V.EQUIP_NO\n  WHERE\n    (\n      (\n        V.EQUIP_CLASS_CD LIKE 'MST%'\n        AND V.EQUIP_NO LIKE 'EI%'\n      )\n      OR (\n        V.EQUIP_CLASS_CD LIKE 'MSI%'\n        AND (\n          V.EQUIP_NO LIKE 'WIX%'\n          OR V.EQUIP_NO LIKE 'WIY%'\n        )\n      )\n    )\n), CTE2 AS (\n  SELECT \n    MIN(W.PLAN_START_DATE) AS PLAN_START_DATE, \n    W.EQUIP_ID\n  FROM\n    WM_WORK_ORDER W \n    left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\n    inner join CTE1 C1 on C1.EQUIP_ID = W.EQUIP_ID\n  WHERE\n    W.CREATE_DATE >= DATEADD(MONTH, -12, GETDATE())\n    and S.WK_GRP_ID in (\n      SELECT\n        WK_GRP_ID \n      FROM \n        SA_WORK_GRP \n      WHERE \n        WK_GRP_CD like 'MR%'\n    )\n    and W.STATUS = 'OP'\n    --and W.PLAN_START_DATE >= GETDATE()\n  GROUP BY\n    W.EQUIP_ID\n)\nSELECT\n  C1.*, \n  C2.PLAN_START_DATE\nFROM\n  CTE1 C1 \n  left join CTE2 C2 on C2.EQUIP_ID = C1.EQUIP_ID\nWHERE\nC1.EQUIP_NO is not null\nORDER BY\n  C1.EQUIP_NO",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table [dbo].[Attunity_IMTE]"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_DESP",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_DESP",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_ID",
+                                            "type": "Int64"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_ID",
+                                            "type": "Int64"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "PLAN_START_DATE",
+                                            "type": "DateTime"
+                                        },
+                                        "sink": {
+                                            "name": "PLAN_START_DATE",
+                                            "type": "DateTime"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_DESP",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_DESP",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_j47",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_j47",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "WITH CTE1 AS (\n  SELECT\n    V.EQUIP_NO,\n    V.EQUIP_CLASS_CD,\n    V.EQUIP_DESP, \n    V.EQUIP_CLASS_DESP, \n    E.EQUIP_ID\n  FROM\n    xls_v_Equipment_Registration V\n    inner join EI_EQUIPMENT E on E.EQUIP_NO = V.EQUIP_NO\n  WHERE\n    (\n      (\n        V.EQUIP_CLASS_CD LIKE 'MST%'\n        AND V.EQUIP_NO LIKE 'EI%'\n      )\n      OR (\n        V.EQUIP_CLASS_CD LIKE 'MSI%'\n        AND (\n          V.EQUIP_NO LIKE 'WIX%'\n          OR V.EQUIP_NO LIKE 'WIY%'\n        )\n      )\n    )\n), CTE2 AS (\n  SELECT \n    MIN(W.PLAN_START_DATE) AS PLAN_START_DATE, \n    W.EQUIP_ID\n  FROM\n    WM_WORK_ORDER W \n    left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\n    inner join CTE1 C1 on C1.EQUIP_ID = W.EQUIP_ID\n  WHERE\n    W.CREATE_DATE >= DATEADD(MONTH, -12, GETDATE())\n    and S.WK_GRP_ID in (\n      SELECT\n        WK_GRP_ID \n      FROM \n        SA_WORK_GRP \n      WHERE \n        WK_GRP_CD like 'MR%'\n    )\n    and W.STATUS = 'OP'\n    --and W.PLAN_START_DATE >= GETDATE()\n  GROUP BY\n    W.EQUIP_ID\n)\nSELECT\n  C1.*, \n  C2.PLAN_START_DATE\nFROM\n  CTE1 C1 \n  left join CTE2 C2 on C2.EQUIP_ID = C1.EQUIP_ID\nWHERE\nC1.EQUIP_NO is not null\nORDER BY\n  C1.EQUIP_NO",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_j47",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-08-28T09:52:02Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_AttuntiyBogieNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_j1t",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_Bogie"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT(E3.EQUIP_NO) AS BogieNo FROM EI_EQUIP_STRT E1,EI_EQUIPMENT E2,EI_EQUIPMENT E3,EI_EQUIP_CLASS E4 WHERE E1.PARENT_EQUIP_ID = E2.EQUIP_ID AND E1.EQUIP_ID = E3.EQUIP_ID AND E4.EQUIP_CLASS_ID = E3.EQUIP_CLASS_ID AND E4.EQUIP_CLASS_CD LIKE 'EMUYS-%' AND E4.EQUIP_CLASS_CD LIKE '%BOGIE%'",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_Bogie"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "BogieNo",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "BogieNo",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_j1t",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_j1t",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-11T04:33:59Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_CompleteWO')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_a3e",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-workorderfile//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "CompleteWO/New/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_a3e",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_a3e",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-13T10:06:12Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/Phase2A_CopyPipeline_FitDefitMent')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_brc",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-fitdefitmentfile//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "UpdateFitmentDefitment/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_brc",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_brc",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-01-14T02:55:15Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttnuityFailureCode')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_efy",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_FailueCode"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "Declare @temp Table(EQUIP_CLASS_CD nvarchar(50))\n\nINSERT INTO @temp\nSELECT\n  DISTINCT EQUIP_CLASS_CD \nFROM\n  xls_v_Equipment_Registration\nWHERE\n  OPTN_WK_GRP_CD like 'MR%'\n\nSELECT DISTINCT\n  S.[TYPE] AS FAILURE_CODE_TYPE,\n  S.CODE AS FAILURE_CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n\n-- Failure Cause Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CAUSE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n-- Failure Action Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_ACTION_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  ) \n",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_FailueCode",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "FAILURE_CODE"
+                                        },
+                                        "sink": {
+                                            "name": "FAILURE_CODE",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "FAILURE_CODE_TYPE"
+                                        },
+                                        "sink": {
+                                            "name": "FAILURE_CODE_TYPE",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_efy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_efy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "Declare @temp Table(EQUIP_CLASS_CD nvarchar(50))\n\nINSERT INTO @temp\nSELECT\n  DISTINCT EQUIP_CLASS_CD \nFROM\n  xls_v_Equipment_Registration\nWHERE\n  OPTN_WK_GRP_CD like 'MR%'\n\nSELECT DISTINCT\n  S.[TYPE] AS FAILURE_CODE_TYPE,\n  S.CODE AS FAILURE_CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n\n-- Failure Cause Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CAUSE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n-- Failure Action Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_ACTION_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  ) \n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_efy",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-08-31T06:12:05Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_SyncCmRequest')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_hji",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "CreateCMWO/To_ADF/"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "smd-cmsyncworkorderfile//"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "FileServerReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_syncCmrequest",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_syncCmrequest",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-04-08T07:06:35Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_CmTemplate_BlobToCommonServer')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_yhp",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-cmuploadworkorderfile//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "CreateCMWO/New/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_cmTemplate_Blob",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_cmTemplate_CommonServer",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-04-09T08:21:52Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_smd_cqa_upload')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_9c5",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-interface-smd-cqa//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "InterfaceServerBatchJob/CAQUpload/Upload/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings"
+                                }
+                            },
+                            "enableStaging": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_cqaupload",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_cqaupload",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-04-10T06:20:39Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_AttunityFailCodeWithEquipNo')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_enp",
+                        "type": "Copy",
+                        "dependsOn": [
+                            {
+                                "activity": "Lookup1",
+                                "dependencyConditions": [
+                                    "Succeeded"
+                                ]
+                            }
+                        ],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_FailueCodeWithEquipNo"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT CODE AS FAILURE_CODE, \n'WORK_NATURE_2' AS FAILURE_CODE_TYPE,\n'' AS EQUIP_NO,\nDESP\nFROM SA_SYS_GENERIC_Code\nWHERE TYPE = 'WORK_NATURE'\nAND PARENT_GC_ID in\n(\n    SELECT GC_ID  FROM SA_SYS_GENERIC_Code WHERE CODE = 'CM'\n)\nUnion \nSELECT DISTINCT CODE, \n'WORK_NATURE_1',\n'',\nDESP\nFROM SA_SYS_GENERIC_Code\nWHERE TYPE = 'WORK_NATURE'\nAND CODE = 'CM'\n",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table dbo.Attunity_FailueCodeWithEquipNo",
+                                "disableMetricsCollection": false
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "FAILURE_CODE",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "FAILURE_CODE",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "FAILURE_CODE_TYPE",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "FAILURE_CODE_TYPE",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "DESP",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "DESP",
+                                            "type": "String"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_AttunityFailCodeWithEquipNo",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_AttunityFailCodeWithEquipNo",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    },
+                    {
+                        "name": "Lookup1",
+                        "type": "Lookup",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT DISTINCT CODE AS FAILURE_CODE, \n'WORK_NATURE_2' AS FAILURE_CODE_TYPE,\n'' AS EQUIP_NO,\nDESP\nFROM SA_SYS_GENERIC_Code\nWHERE TYPE = 'WORK_NATURE'\nAND PARENT_GC_ID in\n(\n    SELECT GC_ID  FROM SA_SYS_GENERIC_Code WHERE CODE = 'CM'\n)\nUnion \nSELECT DISTINCT CODE, \n'WORK_NATURE_1',\n'',\nDESP\nFROM SA_SYS_GENERIC_Code\nWHERE TYPE = 'WORK_NATURE'\nAND CODE = 'CM'\n",
+                                "queryTimeout": "02:00:00",
+                                "partitionOption": "None"
+                            },
+                            "dataset": {
+                                "referenceName": "SourceDataset_AttunityFailCodeWithEquipNo",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        }
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-08-31T06:17:34Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_async_workorder')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_ylh",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "."
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "dbo.Attunity_WorkOrder_ForTest"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "SqlServerSource",
+                                "sqlReaderQuery": "SELECT W.WO_NO, W.WO_DESP, S.WK_GRP_ID, S.WK_GRP_CD, S.WK_GRP_NAME, W.PLAN_START_DATE, W.GC_WORK_NATURE_LV1_CD, W.GC_WORK_NATURE_LV2_CD, P.STD_JOB_CD, E1.EQUIP_NO, E2.EQUIP_CLASS_CD, Isnull(C.LOC_ID,'') as LOC_ID, Isnull(C.LOC_CD,'') as LOC_CD, W.CREATE_DATE\nFROM WM_WORK_ORDER W left join PM_STANDARD_JOB P on P.STD_JOB_ID = W.STD_JOB_ID left join EI_EQUIPMENT E1 on E1.EQUIP_ID = W.EQUIP_ID\nleft join EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = W.EQUIP_CLASS_ID left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\nleft join CO_LOCATION C on C.LOC_ID = W.PLAN_FROM_LOC_ID\nWHERE W.CREATE_DATE >= DATEADD(DAY, -60, GETDATE()) and W.STATUS = 'OP'\nand P.STD_JOB_CD is not null",
+                                "partitionOption": "None"
+                            },
+                            "sink": {
+                                "type": "AzureSqlSink",
+                                "preCopyScript": "truncate table Attunity_WorkOrder_ForTest"
+                            },
+                            "enableStaging": false,
+                            "translator": {
+                                "type": "TabularTranslator",
+                                "mappings": [
+                                    {
+                                        "source": {
+                                            "name": "WO_NO",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WO_NO",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WO_DESP",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WO_DESP",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_ID",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WK_GRP_ID",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WK_GRP_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "WK_GRP_NAME",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "WK_GRP_NAME",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "PLAN_START_DATE",
+                                            "type": "DateTime"
+                                        },
+                                        "sink": {
+                                            "name": "PLAN_START_DATE",
+                                            "type": "DateTime"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "GC_WORK_NATURE_LV1_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "GC_WORK_NATURE_LV1_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "GC_WORK_NATURE_LV2_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "GC_WORK_NATURE_LV2_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "STD_JOB_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "STD_JOB_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_NO",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "EQUIP_CLASS_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "LOC_ID",
+                                            "type": "Int64"
+                                        },
+                                        "sink": {
+                                            "name": "LOC_ID",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "LOC_CD",
+                                            "type": "String"
+                                        },
+                                        "sink": {
+                                            "name": "LOC_CD",
+                                            "type": "String"
+                                        }
+                                    },
+                                    {
+                                        "source": {
+                                            "name": "CREATE_DATE"
+                                        },
+                                        "sink": {
+                                            "name": "CREATE_DATE"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_async_workorder",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_async_workorder",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-05-12T07:28:51Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_CmTemplate_BlobToCommonServer_test')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_xal",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-cmuploadworkorderfile//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "CreateCMWO/New/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                },
+                                "formatSettings": {
+                                    "type": "BinaryReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings"
+                                }
+                            },
+                            "enableStaging": false,
+                            "enableSkipIncompatibleRow": false,
+                            "skipErrorFile": {
+                                "fileMissing": true
+                            },
+                            "validateDataConsistency": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_xal",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_xal",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-06-22T02:45:14Z"
+            },
+            "dependsOn": []
+        },
+        {
+            "name": "[concat(parameters('factoryName'), '/CopyPipeline_CmTemplate_BlobToCommonServer_Test2')]",
+            "type": "Microsoft.DataFactory/factories/pipelines",
+            "apiVersion": "2018-06-01",
+            "properties": {
+                "activities": [
+                    {
+                        "name": "Copy_8n8",
+                        "type": "Copy",
+                        "dependsOn": [],
+                        "policy": {
+                            "timeout": "7.00:00:00",
+                            "retry": 0,
+                            "retryIntervalInSeconds": 30,
+                            "secureOutput": false,
+                            "secureInput": false
+                        },
+                        "userProperties": [
+                            {
+                                "name": "Source",
+                                "value": "smd-cmuploadworkorderfile//"
+                            },
+                            {
+                                "name": "Destination",
+                                "value": "CreateCMWO/New/"
+                            }
+                        ],
+                        "typeProperties": {
+                            "source": {
+                                "type": "BinarySource",
+                                "storeSettings": {
+                                    "type": "AzureBlobStorageReadSettings",
+                                    "recursive": true,
+                                    "modifiedDatetimeStart": {
+                                        "value": "@pipeline().parameters.windowStart",
+                                        "type": "Expression"
+                                    },
+                                    "modifiedDatetimeEnd": {
+                                        "value": "@pipeline().parameters.windowEnd",
+                                        "type": "Expression"
+                                    },
+                                    "wildcardFileName": "*"
+                                },
+                                "formatSettings": {
+                                    "type": "BinaryReadSettings"
+                                }
+                            },
+                            "sink": {
+                                "type": "BinarySink",
+                                "storeSettings": {
+                                    "type": "FileServerWriteSettings"
+                                }
+                            },
+                            "enableStaging": false,
+                            "enableSkipIncompatibleRow": false,
+                            "skipErrorFile": {
+                                "fileMissing": true
+                            },
+                            "validateDataConsistency": false
+                        },
+                        "inputs": [
+                            {
+                                "referenceName": "SourceDataset_8n8",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ],
+                        "outputs": [
+                            {
+                                "referenceName": "DestinationDataset_8n8",
+                                "type": "DatasetReference",
+                                "parameters": {}
+                            }
+                        ]
+                    }
+                ],
+                "policy": {
+                    "elapsedTimeMetric": {},
+                    "cancelAfter": {}
+                },
+                "parameters": {
+                    "windowStart": {
+                        "type": "String"
+                    },
+                    "windowEnd": {
+                        "type": "String"
+                    }
+                },
+                "annotations": [],
+                "lastPublishTime": "2020-06-22T03:13:28Z"
+            },
+            "dependsOn": []
+        }
+    ]
+}
