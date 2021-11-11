@@ -11,7 +11,7 @@ variables:
   subscription: "1e984346-edba-4a2c-8888-cf0f668bea68"
   resourceGroup: "SMD_Testing"
   dataFactory: "AZUSMDA301V"
-    Build.Repository.LocalPath: "./"
+  Build.Repository.LocalPath: "./"
 
 steps:
 
