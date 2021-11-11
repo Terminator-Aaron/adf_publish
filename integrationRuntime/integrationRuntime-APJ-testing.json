@@ -1,0 +1,7 @@
+{
+	"name": "integrationRuntime-APJ-testing",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "Testing data"
+	}
+}

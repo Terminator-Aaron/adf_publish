@@ -1,0 +1,84 @@
+{
+	"name": "Attunity_EI_EQUIP_CLASS",
+	"properties": {
+		"description": "EI_EQUIP_CLASS",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "EI_EQUIP_CLASS",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.EI_EQUIP_CLASS",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BU_ID": "BU_ID",
+							"EQUIP_CLASS_ID": "EQUIP_CLASS_ID",
+							"EQUIP_CLASS_CD": "EQUIP_CLASS_CD",
+							"ALIAS_MANDATORY_IND": "ALIAS_MANDATORY_IND",
+							"GC_EQUIP_CLASS_TYPE_CD": "GC_EQUIP_CLASS_TYPE_CD",
+							"EQUIP_CLASS_DESP": "EQUIP_CLASS_DESP",
+							"FUNCTIONAL_UNIT_IND": "FUNCTIONAL_UNIT_IND",
+							"GC_SAFETY_CRITICAL_LEVEL_CD": "GC_SAFETY_CRITICAL_LEVEL_CD",
+							"GC_SERVICE_CRITICAL_LEVEL_CD": "GC_SERVICE_CRITICAL_LEVEL_CD",
+							"ASSET_OWNER": "ASSET_OWNER",
+							"CUSTODIAN": "CUSTODIAN",
+							"OPERATOR": "OPERATOR",
+							"MAINTAIN_WK_GRP_ID": "MAINTAIN_WK_GRP_ID",
+							"VENDOR": "VENDOR",
+							"OEM": "OEM",
+							"LOC_RANGE_IND": "LOC_RANGE_IND",
+							"ANTICIPATED_LIFE_SPAN": "ANTICIPATED_LIFE_SPAN",
+							"DEFAULT_PARENT_CLASS_ID": "DEFAULT_PARENT_CLASS_ID",
+							"GC_CLASS_GRP_ID": "GC_CLASS_GRP_ID",
+							"NORMAL_OPER_START_MINUTES": "NORMAL_OPER_START_MINUTES",
+							"NORMAL_OPER_END_MINUTES": "NORMAL_OPER_END_MINUTES",
+							"RESERVED_FIELD1": "RESERVED_FIELD1",
+							"RESERVED_FIELD2": "RESERVED_FIELD2",
+							"RESERVED_FIELD3": "RESERVED_FIELD3",
+							"STATUS": "STATUS",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_EI_EQUIP_CLASS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_EI_EQUIP_CLASS",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T07:01:05Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

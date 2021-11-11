@@ -1,0 +1,107 @@
+{
+	"name": "Attunity_EI_EQUIPMENT",
+	"properties": {
+		"description": "EI_EQUIPMENT",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "Copy data from SQL server to SQL Azure",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.EI_EQUIPMENT",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BU_ID": "BU_ID",
+							"EQUIP_ID": "EQUIP_ID",
+							"EQUIP_NO": "EQUIP_NO",
+							"EQUIP_CLASS_ID": "EQUIP_CLASS_ID",
+							"EQUIP_DESP": "EQUIP_DESP",
+							"EFF_START_DATE": "EFF_START_DATE",
+							"EFF_END_DATE": "EFF_END_DATE",
+							"VENDOR": "VENDOR",
+							"OPTN_WK_GRP_ID": "OPTN_WK_GRP_ID",
+							"OWNER": "OWNER",
+							"CUSTODIAN": "CUSTODIAN",
+							"OPERATOR": "OPERATOR",
+							"SERIAL_NO": "SERIAL_NO",
+							"FIRST_INSTALL_DATE": "FIRST_INSTALL_DATE",
+							"COMM_DATE": "COMM_DATE",
+							"HANDOVER_DATE": "HANDOVER_DATE",
+							"GC_SERVICE_CRITICAL_LEVEL_CD": "GC_SERVICE_CRITICAL_LEVEL_CD",
+							"GC_SAFETY_CRITICAL_LEVEL_CD": "GC_SAFETY_CRITICAL_LEVEL_CD",
+							"ESTIMATE_LIFE_SPAN": "ESTIMATE_LIFE_SPAN",
+							"OEM": "OEM",
+							"FIX_ASSET_NO": "FIX_ASSET_NO",
+							"QUANTITY": "QUANTITY",
+							"UOM": "UOM",
+							"CREATE_DATETIME": "CREATE_DATETIME",
+							"NORMAL_OPER_START_MINUTES": "NORMAL_OPER_START_MINUTES",
+							"NORMAL_OPER_END_MINUTES": "NORMAL_OPER_END_MINUTES",
+							"EXEMPTION_START_DATETIME": "EXEMPTION_START_DATETIME",
+							"EXEMPTION_END_DATETIME": "EXEMPTION_END_DATETIME",
+							"CREATE_USER_ID": "CREATE_USER_ID",
+							"STATUS": "STATUS",
+							"RESERVED_FIELD1": "RESERVED_FIELD1",
+							"RESERVED_FIELD2": "RESERVED_FIELD2",
+							"RESERVED_FIELD3": "RESERVED_FIELD3",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME",
+							"GC_MODEL_CD": "GC_MODEL_CD",
+							"ITEM_TYPE": "ITEM_TYPE",
+							"LINE_ID": "LINE_ID",
+							"GC_DIRECTION_CD": "GC_DIRECTION_CD",
+							"REPORT_FROM_LOC_ID": "REPORT_FROM_LOC_ID",
+							"REPORT_TO_LOC_ID": "REPORT_TO_LOC_ID",
+							"FROM_LOC_ID": "FROM_LOC_ID",
+							"TO_LOC_ID": "TO_LOC_ID",
+							"KM_FROM": "KM_FROM",
+							"KM_TO": "KM_TO",
+							"POSITION": "POSITION",
+							"EQUIP_NO_ALIAS": "EQUIP_NO_ALIAS",
+							"EQUIP_EDITABLE_IND": "EQUIP_EDITABLE_IND",
+							"VIRTUAL_IND": "VIRTUAL_IND"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_EI_EQUIPMENT",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_EI_EQUIPMENT",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T05:30:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

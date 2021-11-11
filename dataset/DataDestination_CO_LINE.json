@@ -1,0 +1,78 @@
+{
+	"name": "DataDestination_CO_LINE",
+	"properties": {
+		"description": "Connect to your data destination store.",
+		"linkedServiceName": {
+			"referenceName": "AttunityDev",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "BU_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LINE_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LINE_CD",
+				"type": "String"
+			},
+			{
+				"name": "LINE_NAME",
+				"type": "String"
+			},
+			{
+				"name": "LINE_GRP_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LINE_SEQUENCE",
+				"type": "Int16"
+			},
+			{
+				"name": "TA_FACTOR",
+				"type": "Decimal"
+			},
+			{
+				"name": "TA_TRIP_NO",
+				"type": "Decimal"
+			},
+			{
+				"name": "TRIP_UP_KM",
+				"type": "Decimal"
+			},
+			{
+				"name": "TRIP_DN_KM",
+				"type": "Decimal"
+			},
+			{
+				"name": "MISC_KM",
+				"type": "Decimal"
+			},
+			{
+				"name": "DEPOT_IN_KM",
+				"type": "Decimal"
+			},
+			{
+				"name": "DEPOT_OUT_KM",
+				"type": "Decimal"
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[CO_LINE]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

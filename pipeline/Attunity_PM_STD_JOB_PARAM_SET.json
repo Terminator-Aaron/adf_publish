@@ -1,0 +1,64 @@
+{
+	"name": "Attunity_PM_STD_JOB_PARAM_SET",
+	"properties": {
+		"description": "PM_STD_JOB_PARAM_SET",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "PM_STD_JOB_PARAM_SET",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.PM_STD_JOB_PARAM_SET",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BU_ID": "BU_ID",
+							"STD_JOB_PARAM_SET_ID": "STD_JOB_PARAM_SET_ID",
+							"STD_JOB_PARAM_SET_NAME": "STD_JOB_PARAM_SET_NAME",
+							"STD_JOB_ID": "STD_JOB_ID",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"TEMP_EQUIP_CLASS_ID": "TEMP_EQUIP_CLASS_ID"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_PM_STD_JOB_PARAM_SET",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_PM_STD_JOB_PARAM_SET",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T08:31:26Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

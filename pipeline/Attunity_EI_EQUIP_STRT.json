@@ -1,0 +1,72 @@
+{
+	"name": "Attunity_EI_EQUIP_STRT",
+	"properties": {
+		"description": "EI_EQUIP_STRT",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "EI_EQUIP_STRT",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"sqlReaderQuery": "select  * from EI_EQUIP_STRT  where  LAST_UPD_DATETIME> '2016-01-01 00:00:00.000000'",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.EI_EQUIP_STRT",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"EQUIP_STRT_ID": "EQUIP_STRT_ID",
+							"BU_ID": "BU_ID",
+							"EQUIP_ID": "EQUIP_ID",
+							"FITMENT_DATE": "FITMENT_DATE",
+							"DEFITMENT_DATE": "DEFITMENT_DATE",
+							"PARENT_EQUIP_ID": "PARENT_EQUIP_ID",
+							"WO_NO_DEFITMENT": "WO_NO_DEFITMENT",
+							"WO_NO_FITMENT": "WO_NO_FITMENT",
+							"POS_IN_PARENT": "POS_IN_PARENT",
+							"INHERIT_PARENT_READING_IND": "INHERIT_PARENT_READING_IND",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME",
+							"SEQUENCE_NO": "SEQUENCE_NO",
+							"SAME_DATE_IND": "SAME_DATE_IND"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_EI_EQUIP_STRT",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_EI_EQUIP_STRT",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T05:32:51Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

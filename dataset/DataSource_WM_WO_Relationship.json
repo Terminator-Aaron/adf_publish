@@ -1,0 +1,42 @@
+{
+	"name": "DataSource_WM_WO_Relationship",
+	"properties": {
+		"description": "Connect to your data source store.",
+		"linkedServiceName": {
+			"referenceName": "Attunity",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"structure": [
+			{
+				"name": "WO_RELATIONSHIP",
+				"type": "Decimal"
+			},
+			{
+				"name": "WO_NO",
+				"type": "String"
+			},
+			{
+				"name": "ASSOC_WO_NO",
+				"type": "String"
+			},
+			{
+				"name": "GC_RELATIONSHIP_TYPE_CD",
+				"type": "String"
+			},
+			{
+				"name": "GENERIC_IND",
+				"type": "String"
+			},
+			{
+				"name": "BU_ID",
+				"type": "Decimal"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[WM_WO_RELATIONSHIP]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
