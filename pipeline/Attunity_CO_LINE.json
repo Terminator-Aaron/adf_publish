@@ -1,0 +1,73 @@
+{
+	"name": "Attunity_CO_LINE",
+	"properties": {
+		"description": "Copy data CO_LINE",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "Copy data from SQL server to SQL Azure",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.CO_LINE",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BU_ID": "BU_ID",
+							"LINE_ID": "LINE_ID",
+							"LINE_CD": "LINE_CD",
+							"LINE_NAME": "LINE_NAME",
+							"LINE_GRP_ID": "LINE_GRP_ID",
+							"LINE_SEQUENCE": "LINE_SEQUENCE",
+							"TA_FACTOR": "TA_FACTOR",
+							"TA_TRIP_NO": "TA_TRIP_NO",
+							"TRIP_UP_KM": "TRIP_UP_KM",
+							"TRIP_DN_KM": "TRIP_DN_KM",
+							"MISC_KM": "MISC_KM",
+							"DEPOT_IN_KM": "DEPOT_IN_KM",
+							"DEPOT_OUT_KM": "DEPOT_OUT_KM",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_CO_LINE",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_CO_LINE",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T05:16:38Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

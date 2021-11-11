@@ -1,0 +1,63 @@
+{
+	"name": "Attunity_WM_WO_Relationship",
+	"properties": {
+		"description": "WM_WO_Relationship",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "WM_WO_Relationship",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.WM_WO_Relationship",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"WO_RELATIONSHIP": "WO_RELATIONSHIP",
+							"WO_NO": "WO_NO",
+							"ASSOC_WO_NO": "ASSOC_WO_NO",
+							"GC_RELATIONSHIP_TYPE_CD": "GC_RELATIONSHIP_TYPE_CD",
+							"GENERIC_IND": "GENERIC_IND",
+							"BU_ID": "BU_ID"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_WM_WO_Relationship",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_WM_WO_Relationship",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-21T01:53:01Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

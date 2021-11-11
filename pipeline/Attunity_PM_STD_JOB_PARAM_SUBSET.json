@@ -1,0 +1,97 @@
+{
+	"name": "Attunity_PM_STD_JOB_PARAM_SUBSET",
+	"properties": {
+		"description": "PM_STD_JOB_PARAM_SUBSET",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "PM_STD_JOB_PARAM_SUBSET",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.PM_STD_JOB_PARAM_SUBSET",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BU_ID": "BU_ID",
+							"STD_JOB_PARAM_SUBSET_ID": "STD_JOB_PARAM_SUBSET_ID",
+							"STD_JOB_PARAM_SET_ID": "STD_JOB_PARAM_SET_ID",
+							"EFF_START_DATE": "EFF_START_DATE",
+							"TIME_INTERVAL": "TIME_INTERVAL",
+							"TIME_MAX_ADV": "TIME_MAX_ADV",
+							"TIME_MAX_POST": "TIME_MAX_POST",
+							"FIRST_MEASUREMENT_TYPE_ID": "FIRST_MEASUREMENT_TYPE_ID",
+							"FIRST_MEASUREMENT_INTERVAL": "FIRST_MEASUREMENT_INTERVAL",
+							"FIRST_MEASUREMENT_MAX_ADV": "FIRST_MEASUREMENT_MAX_ADV",
+							"FIRST_MEASUREMENT_MAX_POST": "FIRST_MEASUREMENT_MAX_POST",
+							"SECOND_MEASUREMENT_TYPE_ID": "SECOND_MEASUREMENT_TYPE_ID",
+							"SECOND_MEASUREMENT_INTERVAL": "SECOND_MEASUREMENT_INTERVAL",
+							"SECOND_MEASUREMENT_MAX_ADV": "SECOND_MEASUREMENT_MAX_ADV",
+							"SECOND_MEASUREMENT_MAX_POST": "SECOND_MEASUREMENT_MAX_POST",
+							"MAX_TOLERANCE_RANGE": "MAX_TOLERANCE_RANGE",
+							"WK_GRP_ID": "WK_GRP_ID",
+							"ESTIMATE_JOB_DUR": "ESTIMATE_JOB_DUR",
+							"STATUTORY_IND": "STATUTORY_IND",
+							"MAX_OVERDUE": "MAX_OVERDUE",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"GC_LAST_JOB_DEF_CD": "GC_LAST_JOB_DEF_CD",
+							"GC_TABULATION_METHOD_CD": "GC_TABULATION_METHOD_CD",
+							"GC_SSD_CALCULATION_METHOD_CD": "GC_SSD_CALCULATION_METHOD_CD",
+							"GC_PRIORITY_CD": "GC_PRIORITY_CD",
+							"GC_WORK_TIME_REQ_CD": "GC_WORK_TIME_REQ_CD",
+							"EFF_END_DATE": "EFF_END_DATE",
+							"GC_ADJUST_SCHEDULE_CD": "GC_ADJUST_SCHEDULE_CD",
+							"DAY_PREFERENCE": "DAY_PREFERENCE",
+							"LAST_JOB_DEF_VALUE": "LAST_JOB_DEF_VALUE",
+							"SCH_FACTOR_FITMENT": "SCH_FACTOR_FITMENT",
+							"SCH_FACTOR_STD_JOB_ID": "SCH_FACTOR_STD_JOB_ID",
+							"MAX_TLRNC_MEASUREMENT_TYPE_ID": "MAX_TLRNC_MEASUREMENT_TYPE_ID",
+							"MAX_TLRNC_MEASUREMENT_RANGE": "MAX_TLRNC_MEASUREMENT_RANGE",
+							"GC_PROJECT_NO_CD": "GC_PROJECT_NO_CD",
+							"GC_PROJECT_TASK_NO_CD": "GC_PROJECT_TASK_NO_CD",
+							"GC_FINANCE_REF_NO_CD": "GC_FINANCE_REF_NO_CD",
+							"CONTRACT_ID": "CONTRACT_ID",
+							"ACCOUNT_CODE": "ACCOUNT_CODE"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_PM_STD_JOB_PARAM_SUBSET",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_PM_STD_JOB_PARAM_SUBSET",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T08:29:28Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

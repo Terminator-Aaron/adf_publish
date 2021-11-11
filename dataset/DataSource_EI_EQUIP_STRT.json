@@ -1,0 +1,74 @@
+{
+	"name": "DataSource_EI_EQUIP_STRT",
+	"properties": {
+		"description": "Connect to your data source store.",
+		"linkedServiceName": {
+			"referenceName": "Attunity",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"structure": [
+			{
+				"name": "EQUIP_STRT_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "BU_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "EQUIP_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "FITMENT_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "DEFITMENT_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "PARENT_EQUIP_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "WO_NO_DEFITMENT",
+				"type": "String"
+			},
+			{
+				"name": "WO_NO_FITMENT",
+				"type": "String"
+			},
+			{
+				"name": "POS_IN_PARENT",
+				"type": "String"
+			},
+			{
+				"name": "INHERIT_PARENT_READING_IND",
+				"type": "String"
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "SEQUENCE_NO",
+				"type": "Int16"
+			},
+			{
+				"name": "SAME_DATE_IND",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[EI_EQUIP_STRT]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

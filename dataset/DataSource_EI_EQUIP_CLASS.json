@@ -1,0 +1,126 @@
+{
+	"name": "DataSource_EI_EQUIP_CLASS",
+	"properties": {
+		"description": "Connect to your data source store.",
+		"linkedServiceName": {
+			"referenceName": "Attunity",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"structure": [
+			{
+				"name": "BU_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "EQUIP_CLASS_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "String"
+			},
+			{
+				"name": "ALIAS_MANDATORY_IND",
+				"type": "String"
+			},
+			{
+				"name": "GC_EQUIP_CLASS_TYPE_CD",
+				"type": "String"
+			},
+			{
+				"name": "EQUIP_CLASS_DESP",
+				"type": "String"
+			},
+			{
+				"name": "FUNCTIONAL_UNIT_IND",
+				"type": "String"
+			},
+			{
+				"name": "GC_SAFETY_CRITICAL_LEVEL_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_SERVICE_CRITICAL_LEVEL_CD",
+				"type": "String"
+			},
+			{
+				"name": "ASSET_OWNER",
+				"type": "String"
+			},
+			{
+				"name": "CUSTODIAN",
+				"type": "String"
+			},
+			{
+				"name": "OPERATOR",
+				"type": "String"
+			},
+			{
+				"name": "MAINTAIN_WK_GRP_ID",
+				"type": "String"
+			},
+			{
+				"name": "VENDOR",
+				"type": "String"
+			},
+			{
+				"name": "OEM",
+				"type": "String"
+			},
+			{
+				"name": "LOC_RANGE_IND",
+				"type": "String"
+			},
+			{
+				"name": "ANTICIPATED_LIFE_SPAN",
+				"type": "Decimal"
+			},
+			{
+				"name": "DEFAULT_PARENT_CLASS_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "GC_CLASS_GRP_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "NORMAL_OPER_START_MINUTES",
+				"type": "Decimal"
+			},
+			{
+				"name": "NORMAL_OPER_END_MINUTES",
+				"type": "Decimal"
+			},
+			{
+				"name": "RESERVED_FIELD1",
+				"type": "String"
+			},
+			{
+				"name": "RESERVED_FIELD2",
+				"type": "String"
+			},
+			{
+				"name": "RESERVED_FIELD3",
+				"type": "String"
+			},
+			{
+				"name": "STATUS",
+				"type": "String"
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "DateTime"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[EI_EQUIP_CLASS]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,214 @@
+{
+	"name": "DataDestination_EI_EQUIPMENT",
+	"properties": {
+		"description": "Connect to your data destination store.",
+		"linkedServiceName": {
+			"referenceName": "AttunityDev",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"structure": [
+			{
+				"name": "BU_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "EQUIP_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "EQUIP_NO",
+				"type": "String"
+			},
+			{
+				"name": "EQUIP_CLASS_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "EQUIP_DESP",
+				"type": "String"
+			},
+			{
+				"name": "EFF_START_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "EFF_END_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "VENDOR",
+				"type": "String"
+			},
+			{
+				"name": "OPTN_WK_GRP_ID",
+				"type": "String"
+			},
+			{
+				"name": "OWNER",
+				"type": "String"
+			},
+			{
+				"name": "CUSTODIAN",
+				"type": "String"
+			},
+			{
+				"name": "OPERATOR",
+				"type": "String"
+			},
+			{
+				"name": "SERIAL_NO",
+				"type": "String"
+			},
+			{
+				"name": "FIRST_INSTALL_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "COMM_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "HANDOVER_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "GC_SERVICE_CRITICAL_LEVEL_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_SAFETY_CRITICAL_LEVEL_CD",
+				"type": "String"
+			},
+			{
+				"name": "ESTIMATE_LIFE_SPAN",
+				"type": "Decimal"
+			},
+			{
+				"name": "OEM",
+				"type": "String"
+			},
+			{
+				"name": "FIX_ASSET_NO",
+				"type": "String"
+			},
+			{
+				"name": "QUANTITY",
+				"type": "Decimal"
+			},
+			{
+				"name": "UOM",
+				"type": "String"
+			},
+			{
+				"name": "CREATE_DATETIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "NORMAL_OPER_START_MINUTES",
+				"type": "Decimal"
+			},
+			{
+				"name": "NORMAL_OPER_END_MINUTES",
+				"type": "Decimal"
+			},
+			{
+				"name": "EXEMPTION_START_DATETIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "EXEMPTION_END_DATETIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "CREATE_USER_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "STATUS",
+				"type": "String"
+			},
+			{
+				"name": "RESERVED_FIELD1",
+				"type": "String"
+			},
+			{
+				"name": "RESERVED_FIELD2",
+				"type": "String"
+			},
+			{
+				"name": "RESERVED_FIELD3",
+				"type": "String"
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "GC_MODEL_CD",
+				"type": "String"
+			},
+			{
+				"name": "ITEM_TYPE",
+				"type": "String"
+			},
+			{
+				"name": "LINE_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "GC_DIRECTION_CD",
+				"type": "String"
+			},
+			{
+				"name": "REPORT_FROM_LOC_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "REPORT_TO_LOC_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "FROM_LOC_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "TO_LOC_ID",
+				"type": "Int64"
+			},
+			{
+				"name": "KM_FROM",
+				"type": "Decimal"
+			},
+			{
+				"name": "KM_TO",
+				"type": "Decimal"
+			},
+			{
+				"name": "POSITION",
+				"type": "String"
+			},
+			{
+				"name": "EQUIP_NO_ALIAS",
+				"type": "String"
+			},
+			{
+				"name": "EQUIP_EDITABLE_IND",
+				"type": "String"
+			},
+			{
+				"name": "VIRTUAL_IND",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[EI_EQUIPMENT]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,9 @@
+{
+	"name": "AZUSMDA301V",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "abfcaefa-68dc-4578-947c-96ded3ae653d",
+		"tenantId": "97f55d35-1929-4acf-9c11-d7aaf05b6756"
+	}
+}

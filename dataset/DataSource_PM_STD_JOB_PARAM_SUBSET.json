@@ -1,0 +1,178 @@
+{
+	"name": "DataSource_PM_STD_JOB_PARAM_SUBSET",
+	"properties": {
+		"description": "Connect to your data source store.",
+		"linkedServiceName": {
+			"referenceName": "Attunity",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"structure": [
+			{
+				"name": "BU_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "STD_JOB_PARAM_SUBSET_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "STD_JOB_PARAM_SET_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "EFF_START_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "TIME_INTERVAL",
+				"type": "Int32"
+			},
+			{
+				"name": "TIME_MAX_ADV",
+				"type": "Int32"
+			},
+			{
+				"name": "TIME_MAX_POST",
+				"type": "Int32"
+			},
+			{
+				"name": "FIRST_MEASUREMENT_TYPE_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "FIRST_MEASUREMENT_INTERVAL",
+				"type": "Decimal"
+			},
+			{
+				"name": "FIRST_MEASUREMENT_MAX_ADV",
+				"type": "Decimal"
+			},
+			{
+				"name": "FIRST_MEASUREMENT_MAX_POST",
+				"type": "Decimal"
+			},
+			{
+				"name": "SECOND_MEASUREMENT_TYPE_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "SECOND_MEASUREMENT_INTERVAL",
+				"type": "Decimal"
+			},
+			{
+				"name": "SECOND_MEASUREMENT_MAX_ADV",
+				"type": "Decimal"
+			},
+			{
+				"name": "SECOND_MEASUREMENT_MAX_POST",
+				"type": "Decimal"
+			},
+			{
+				"name": "MAX_TOLERANCE_RANGE",
+				"type": "Int32"
+			},
+			{
+				"name": "WK_GRP_ID",
+				"type": "String"
+			},
+			{
+				"name": "ESTIMATE_JOB_DUR",
+				"type": "Int16"
+			},
+			{
+				"name": "STATUTORY_IND",
+				"type": "String"
+			},
+			{
+				"name": "MAX_OVERDUE",
+				"type": "Int16"
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "DateTime"
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "GC_LAST_JOB_DEF_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_TABULATION_METHOD_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_SSD_CALCULATION_METHOD_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_PRIORITY_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_WORK_TIME_REQ_CD",
+				"type": "String"
+			},
+			{
+				"name": "EFF_END_DATE",
+				"type": "DateTime"
+			},
+			{
+				"name": "GC_ADJUST_SCHEDULE_CD",
+				"type": "String"
+			},
+			{
+				"name": "DAY_PREFERENCE",
+				"type": "Int16"
+			},
+			{
+				"name": "LAST_JOB_DEF_VALUE",
+				"type": "String"
+			},
+			{
+				"name": "SCH_FACTOR_FITMENT",
+				"type": "String"
+			},
+			{
+				"name": "SCH_FACTOR_STD_JOB_ID",
+				"type": "String"
+			},
+			{
+				"name": "MAX_TLRNC_MEASUREMENT_TYPE_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "MAX_TLRNC_MEASUREMENT_RANGE",
+				"type": "Decimal"
+			},
+			{
+				"name": "GC_PROJECT_NO_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_PROJECT_TASK_NO_CD",
+				"type": "String"
+			},
+			{
+				"name": "GC_FINANCE_REF_NO_CD",
+				"type": "String"
+			},
+			{
+				"name": "CONTRACT_ID",
+				"type": "Decimal"
+			},
+			{
+				"name": "ACCOUNT_CODE",
+				"type": "String"
+			}
+		],
+		"typeProperties": {
+			"tableName": "[dbo].[PM_STD_JOB_PARAM_SUBSET]"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

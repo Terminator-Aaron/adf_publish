@@ -1,0 +1,72 @@
+{
+	"name": "Attunity_SA_WORK_GRP",
+	"properties": {
+		"description": "SA_WORK_GRP",
+		"activities": [
+			{
+				"name": "SQL_to_SQLAzure",
+				"description": "SA_WORK_GRP",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlSource",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlSink",
+						"writeBatchSize": 10000,
+						"preCopyScript": "truncate table dbo.SA_WORK_GRP",
+						"disableMetricsCollection": false,
+						"writeBehavior": "insert"
+					},
+					"enableStaging": false,
+					"dataIntegrationUnits": 0,
+					"translator": {
+						"type": "TabularTranslator",
+						"columnMappings": {
+							"BU_ID": "BU_ID",
+							"WK_GRP_ID": "WK_GRP_ID",
+							"OU_ID": "OU_ID",
+							"WK_GRP_CD": "WK_GRP_CD",
+							"WK_GRP_NAME": "WK_GRP_NAME",
+							"CALL_HORIZON_DAYS": "CALL_HORIZON_DAYS",
+							"CALL_HORIZON_WKS": "CALL_HORIZON_WKS",
+							"CALL_HORIZON_DAY_OF_WK": "CALL_HORIZON_DAY_OF_WK",
+							"PLANNING_START_DATE": "PLANNING_START_DATE",
+							"PLANNING_END_DATE": "PLANNING_END_DATE",
+							"LAST_UPD_USER_ID": "LAST_UPD_USER_ID",
+							"LAST_UPD_DATETIME": "LAST_UPD_DATETIME",
+							"EFF_START_DATE": "EFF_START_DATE",
+							"EFF_END_DATE": "EFF_END_DATE",
+							"MONITORING_IND": "MONITORING_IND"
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "DataSource_SA_WORK_GRP",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DataDestination_SA_WORK_GRP",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-07-20T07:05:06Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

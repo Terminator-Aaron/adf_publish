@@ -1,0 +1,16 @@
+{
+	"name": "AttunityDev",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=azusmdd301v.database.windows.net;initial catalog=Attunity_Dev;user id=smdtadm",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI1MTg3ZjYzOC1kYjhiLTRlOWItYjVkZi02NWJmNWQ5NjZmZGYiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SharedIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}
