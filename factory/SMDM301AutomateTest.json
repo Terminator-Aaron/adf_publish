@@ -1,0 +1,9 @@
+{
+	"name": "SMDM301AutomateTest",
+	"location": "eastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "4a4ccca2-cc30-4239-a409-376d9a4046ea",
+		"tenantId": "8f83bac8-26d1-4989-8f82-90e14daca290"
+	}
+}
