@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_Attunity_EquipmentClassAssocCode",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_Attunity_EquipmentClassAssocCode",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addhours(trigger().scheduledTime, -12)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2021-02-01T23:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

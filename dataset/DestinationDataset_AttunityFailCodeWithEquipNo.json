@@ -1,0 +1,48 @@
+{
+	"name": "DestinationDataset_AttunityFailCodeWithEquipNo",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Phase2B_SQL_Server_SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "FAILURE_CODE",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "FAILURE_CODE_TYPE",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "EQUIP_NO",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "DESP",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_FailueCodeWithEquipNo"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

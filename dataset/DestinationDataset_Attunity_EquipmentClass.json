@@ -1,0 +1,31 @@
+{
+	"name": "DestinationDataset_Attunity_EquipmentClass",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Phase2B_SQL_Server_SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "EQUIP_CLASS_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_EquipmentClass"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

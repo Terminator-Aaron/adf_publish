@@ -1,0 +1,96 @@
+{
+	"name": "DestinationDataset_async_workorder",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "WO_NO",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "WO_DESP",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "WK_GRP_ID",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "WK_GRP_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "WK_GRP_NAME",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "PLAN_START_DATE",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "GC_WORK_NATURE_LV1_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "GC_WORK_NATURE_LV2_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "STD_JOB_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "EQUIP_NO",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "LOC_ID",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "LOC_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_WorkOrder_ForTest"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,36 @@
+{
+	"name": "DestinationDataset_j61",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "WorkGroupNo",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "WorkGroupCode",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_WorkGroup"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,167 @@
+{
+	"name": "CopyPipeline_Attunity_SYS_GENERIC_CODE_New",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_ekj",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_SYS_GENERIC_CODE"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE Attunity_SYS_GENERIC_CODE"
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Code",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "Code",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Name",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "Type",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Type",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "ParentCode",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "ParentCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DESP",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "DESP",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_Attunity_SYS_GENERIC_CODE_New",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_Attunity_SYS_GENERIC_CODE_New",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT \n  LINE_CD AS [Code], \n  LINE_NAME AS [Name],  \n  'LINE' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM CO_LINE\n  UNION\nSELECT LOC_CD AS [Code], \n  LOC_NAME AS [Name],  \n  'Location_DEPOT' As [Type],\n  '' ParentCode,\n  '' DESP\nFROM\n  CO_LOCATION\n  where GC_LOC_TYPE_CD='DEPOT'\n  UNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level1' AS [Type], ''  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE WHERE CODE in ('PM', 'CM') AND TYPE = 'WORK_NATURE'\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_PM' AS [Type], 'PM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'PM' AND TYPE = 'WORK_NATURE')\nUNION\nSELECT CODE, '' as [Name], 'WORK_NATURE_Level2_CM' AS [Type], 'CM'  ParentCode, DESP\nFROM SA_SYS_GENERIC_CODE \nWHERE PARENT_GC_ID in \n(SELECT GC_ID FROM SA_SYS_GENERIC_CODE CODE WHERE  CODE = 'CM' AND TYPE = 'WORK_NATURE')\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_Attunity_SYS_GENERIC_CODE_New",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-07-12T07:50:14Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

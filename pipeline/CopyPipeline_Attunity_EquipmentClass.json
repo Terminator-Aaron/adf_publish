@@ -1,0 +1,122 @@
+{
+	"name": "CopyPipeline_Attunity_EquipmentClass",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_EquipCLass",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_EquipmentClass"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "select EQUIP_CLASS_ID, EQUIP_CLASS_CD from EI_EQUIP_CLASS",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_EquipmentClass",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EQUIP_CLASS_ID",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_Attunity_EquipmentClass",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_Attunity_EquipmentClass",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "select EQUIP_CLASS_ID, EQUIP_CLASS_CD from EI_EQUIP_CLASS",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_Attunity_EquipmentClass",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-10-21T06:51:59Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

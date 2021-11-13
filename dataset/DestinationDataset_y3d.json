@@ -1,0 +1,54 @@
+{
+	"name": "DestinationDataset_y3d",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Phase2B_SQL_Server_SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "EQUIP_NO",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "EQUIP_CLASS_DESP",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "EQUIP_ID",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 0
+			},
+			{
+				"name": "PLAN_START_DATE",
+				"type": "datetime2",
+				"precision": 27,
+				"scale": 7
+			},
+			{
+				"name": "EQUIP_DESP",
+				"type": "varchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_IMTE"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

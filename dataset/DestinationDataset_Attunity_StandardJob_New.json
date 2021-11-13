@@ -1,0 +1,60 @@
+{
+	"name": "DestinationDataset_Attunity_StandardJob_New",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Phase2B_SQL_Server_SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "StandardJobCode",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "StandardJobDesp",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "WorkGroupCode",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "WorkNatureLevel1",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "WorkNatureLevel2",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "EstimateJobDuration",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_StandardJob"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

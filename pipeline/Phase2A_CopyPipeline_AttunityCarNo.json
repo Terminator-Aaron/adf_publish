@@ -1,0 +1,79 @@
+{
+	"name": "Phase2A_CopyPipeline_AttunityCarNo",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_so7",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_Cart"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS CarNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUY-SS%' ORDER BY EQUIP_NO;",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_Cart"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CarNo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CarNo",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_so7",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_so7",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-01-11T04:22:57Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

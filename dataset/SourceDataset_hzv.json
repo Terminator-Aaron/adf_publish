@@ -1,0 +1,20 @@
+{
+	"name": "SourceDataset_hzv",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "EquipmentNo",
+				"type": "varchar",
+				"precision": 255,
+				"scale": 255
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

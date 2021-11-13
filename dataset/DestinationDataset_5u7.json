@@ -1,0 +1,19 @@
+{
+	"name": "DestinationDataset_5u7",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageBackUp",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "cosmosdbbakup"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

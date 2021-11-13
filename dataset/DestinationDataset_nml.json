@@ -1,0 +1,60 @@
+{
+	"name": "DestinationDataset_nml",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Phase2B_SQL_Server_SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "BU_ID",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "STD_JOB_PARAM_SET_ID",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "STD_JOB_PARAM_SET_NAME",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "STD_JOB_ID",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "datetime",
+				"precision": 23,
+				"scale": 3
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "TEMP_EQUIP_CLASS_ID",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_PM_STD_JOB_PARAM_SET_forTest"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

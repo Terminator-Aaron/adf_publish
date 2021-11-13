@@ -1,0 +1,167 @@
+{
+	"name": "CopyPipeline_Attunity_CM_InitialDelaySetting",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_puk",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_CM_InitialDelaySetting"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT d.[EQUIP_CLASS_CD]\n, c.[CTX_ID1]\n, c.[CTX_ID2]\n, c.[CTX_ID3]\n, c.[CTX_ID4]\nFROM [mmsdb].[dbo].[CO_UDF_SET_ASSOC] a\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_SET] b ON b.UDF_SET_ID = a.UDF_SET_ID\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_ASSOC] c ON c.UDF_ASSOC_ID = b.[UDF_ASSOC_ID]\nLEFT OUTER JOIN [mmsdb].[dbo].[EI_EQUIP_CLASS] d ON c.[CTX_ID1] = CAST(d.EQUIP_CLASS_ID AS CHAR)\nWHERE c.GC_CTX_TYPE_CD = 'WO' AND c.CTX_ID2 <> 'C&R PROJECT WORKS' \nAND a.UDF_ID = (SELECT UDF_ID FROM [mmsdb].[dbo].[CO_UDF_DEF] WHERE UDF_NAME = 'Ref. Initial Delay (min)')\nORDER BY d.EQUIP_CLASS_CD\n",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "TRUNCATE TABLE dbo.Attunity_CM_InitialDelaySetting"
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "CTX_ID1",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_ID",
+									"type": "String",
+									"physicalType": "varchar"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CTX_ID2",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "WorkNatureLevel1",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CTX_ID3",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "WorkNatureLevel2",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CTX_ID4",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "StandardJobCode",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_Attunity_CM_InitialDelaySetting",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_Attunity_CM_InitialDelaySetting",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT d.[EQUIP_CLASS_CD]\n, c.[CTX_ID1]\n, c.[CTX_ID2]\n, c.[CTX_ID3]\n, c.[CTX_ID4]\nFROM [mmsdb].[dbo].[CO_UDF_SET_ASSOC] a\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_SET] b ON b.UDF_SET_ID = a.UDF_SET_ID\nLEFT OUTER JOIN [mmsdb].[dbo].[CO_UDF_ASSOC] c ON c.UDF_ASSOC_ID = b.[UDF_ASSOC_ID]\nLEFT OUTER JOIN [mmsdb].[dbo].[EI_EQUIP_CLASS] d ON c.[CTX_ID1] = CAST(d.EQUIP_CLASS_ID AS CHAR)\nWHERE c.GC_CTX_TYPE_CD = 'WO' AND c.CTX_ID2 <> 'C&R PROJECT WORKS' \nAND a.UDF_ID = (SELECT UDF_ID FROM [mmsdb].[dbo].[CO_UDF_DEF] WHERE UDF_NAME = 'Ref. Initial Delay (min)')\nORDER BY d.EQUIP_CLASS_CD\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_Attunity_CM_InitialDelaySetting",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-04-28T08:36:22Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

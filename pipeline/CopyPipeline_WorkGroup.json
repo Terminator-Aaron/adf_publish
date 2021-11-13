@@ -1,0 +1,89 @@
+{
+	"name": "CopyPipeline_WorkGroup",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_j61",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_WorkGroup"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "select WK_GRP_ID, WK_GRP_CD from SA_WORK_GRP Where WK_GRP_CD like 'MR%' \n or WK_GRP_CD like  'CR%'  or WK_GRP_CD like  'MO%'   order by WK_GRP_CD desc",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_WorkGroup"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "WK_GRP_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WorkGroupNo",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "WK_GRP_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "WorkGroupCode",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_j61",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_j61",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-12-01T09:30:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

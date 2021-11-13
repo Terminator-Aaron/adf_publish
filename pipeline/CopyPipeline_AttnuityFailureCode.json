@@ -1,0 +1,129 @@
+{
+	"name": "CopyPipeline_AttnuityFailureCode",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_efy",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_FailueCode"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "Declare @temp Table(EQUIP_CLASS_CD nvarchar(50))\n\nINSERT INTO @temp\nSELECT\n  DISTINCT EQUIP_CLASS_CD \nFROM\n  xls_v_Equipment_Registration\nWHERE\n  OPTN_WK_GRP_CD like 'MR%'\n\nSELECT DISTINCT\n  S.[TYPE] AS FAILURE_CODE_TYPE,\n  S.CODE AS FAILURE_CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n\n-- Failure Cause Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CAUSE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n-- Failure Action Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_ACTION_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  ) \n",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_FailueCode",
+						"disableMetricsCollection": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "FAILURE_CODE"
+								},
+								"sink": {
+									"name": "FAILURE_CODE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "FAILURE_CODE_TYPE"
+								},
+								"sink": {
+									"name": "FAILURE_CODE_TYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "DESP"
+								},
+								"sink": {
+									"name": "DESP",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_efy",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_efy",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "Declare @temp Table(EQUIP_CLASS_CD nvarchar(50))\n\nINSERT INTO @temp\nSELECT\n  DISTINCT EQUIP_CLASS_CD \nFROM\n  xls_v_Equipment_Registration\nWHERE\n  OPTN_WK_GRP_CD like 'MR%'\n\nSELECT DISTINCT\n  S.[TYPE] AS FAILURE_CODE_TYPE,\n  S.CODE AS FAILURE_CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n\n-- Failure Cause Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_CAUSE_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  )\nUNION\n-- Failure Action Code\nSELECT DISTINCT\n  S.[TYPE],\n  S.CODE,\n  S.DESP\nFROM\n  EI_EQUIP_CLASS_ITEMS_ASSOC E1 \n  LEFT JOIN SA_SYS_GENERIC_CODE S ON E1.GC_ITEM_CD = S.CODE, \n  EI_EQUIP_CLASS E2\nWHERE\n  E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\n  AND S.[TYPE] = 'FAILURE_ACTION_CODE'\n  AND E2.EQUIP_CLASS_CD IN (\n    SELECT\n      DISTINCT EQUIP_CLASS_CD\n    FROM\n      @temp\n  ) \n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_efy",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-08-31T06:12:05Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

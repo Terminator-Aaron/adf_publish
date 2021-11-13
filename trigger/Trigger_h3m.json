@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_h3m",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Phase2A_CopyPipeline_Workgroup",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addhours(trigger().scheduledTime, -12)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2020-01-09T00:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

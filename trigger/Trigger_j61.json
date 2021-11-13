@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_j61",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_WorkGroup",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addhours(trigger().scheduledTime, -24)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2019-12-12T08:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

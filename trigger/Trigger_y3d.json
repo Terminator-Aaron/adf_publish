@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_y3d",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_AttunityIMTE",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addhours(trigger().scheduledTime, -24)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2019-09-27T12:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

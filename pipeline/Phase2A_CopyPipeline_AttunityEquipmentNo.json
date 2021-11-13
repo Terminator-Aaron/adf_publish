@@ -1,0 +1,79 @@
+{
+	"name": "Phase2A_CopyPipeline_AttunityEquipmentNo",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_hzv",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_Equipment"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT EQUIP_CLASS_CD AS EquipmentNo FROM xls_v_Equipment_Registration WHERE EQUIP_CLASS_CD LIKE 'EMUYS-%' ORDER BY EQUIP_NO;",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_Equipment"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EquipmentNo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EquipmentNo",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_hzv",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_hzv",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-01-11T04:26:47Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

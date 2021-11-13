@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_Attunity_StandardJob_New",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_Attunity_StandardJob_New",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addhours(trigger().scheduledTime, -12)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2021-03-15T23:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

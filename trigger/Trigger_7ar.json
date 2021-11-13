@@ -1,0 +1,17 @@
+{
+	"name": "Trigger_7ar",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2021-01-28T23:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

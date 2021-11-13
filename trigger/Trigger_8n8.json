@@ -1,0 +1,17 @@
+{
+	"name": "Trigger_8n8",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Stopped",
+		"pipelines": [],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 2,
+				"startTime": "2020-06-22T03:11:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "SIT",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=azusmdd201v.database.windows.net;initial catalog=SMD_Pro_F2A_Finial_Test;user id=smdtadm",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiJjYzRlMjEzNi1lYWFjLTQxZWItOTdjNi00OTdlZDZlMmIxYmMiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SharedIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

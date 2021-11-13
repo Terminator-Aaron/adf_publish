@@ -1,0 +1,50 @@
+{
+	"name": "SourceDataset_j47",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "EQUIP_NO",
+				"type": "varchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "varchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "EQUIP_DESP",
+				"type": "varchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "EQUIP_CLASS_DESP",
+				"type": "varchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "EQUIP_ID",
+				"type": "bigint",
+				"precision": 19,
+				"scale": 255
+			},
+			{
+				"name": "PLAN_START_DATE",
+				"type": "datetime2",
+				"precision": 255,
+				"scale": 7
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

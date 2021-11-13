@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_Attunity_CM_InitialDelaySetting",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_Attunity_CM_InitialDelaySetting",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addhours(trigger().scheduledTime, -12)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 12,
+				"startTime": "2021-04-28T23:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

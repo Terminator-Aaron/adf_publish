@@ -1,0 +1,19 @@
+{
+	"name": "DestinationDataset_mi3",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageSIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "temp"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

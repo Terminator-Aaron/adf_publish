@@ -1,0 +1,138 @@
+{
+	"name": "SourceDataset_Attunity_EquipmentClass",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "BU_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "EQUIP_CLASS_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "varchar"
+			},
+			{
+				"name": "ALIAS_MANDATORY_IND",
+				"type": "varchar"
+			},
+			{
+				"name": "GC_EQUIP_CLASS_TYPE_CD",
+				"type": "varchar"
+			},
+			{
+				"name": "EQUIP_CLASS_DESP",
+				"type": "varchar"
+			},
+			{
+				"name": "FUNCTIONAL_UNIT_IND",
+				"type": "varchar"
+			},
+			{
+				"name": "GC_SAFETY_CRITICAL_LEVEL_CD",
+				"type": "varchar"
+			},
+			{
+				"name": "GC_SERVICE_CRITICAL_LEVEL_CD",
+				"type": "varchar"
+			},
+			{
+				"name": "ASSET_OWNER",
+				"type": "varchar"
+			},
+			{
+				"name": "CUSTODIAN",
+				"type": "varchar"
+			},
+			{
+				"name": "OPERATOR",
+				"type": "varchar"
+			},
+			{
+				"name": "MAINTAIN_WK_GRP_ID",
+				"type": "varchar"
+			},
+			{
+				"name": "VENDOR",
+				"type": "varchar"
+			},
+			{
+				"name": "OEM",
+				"type": "varchar"
+			},
+			{
+				"name": "LOC_RANGE_IND",
+				"type": "varchar"
+			},
+			{
+				"name": "ANTICIPATED_LIFE_SPAN",
+				"type": "decimal",
+				"precision": 6,
+				"scale": 2
+			},
+			{
+				"name": "DEFAULT_PARENT_CLASS_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "GC_CLASS_GRP_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "NORMAL_OPER_START_MINUTES",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "NORMAL_OPER_END_MINUTES",
+				"type": "decimal",
+				"precision": 10,
+				"scale": 2
+			},
+			{
+				"name": "RESERVED_FIELD1",
+				"type": "varchar"
+			},
+			{
+				"name": "RESERVED_FIELD2",
+				"type": "varchar"
+			},
+			{
+				"name": "RESERVED_FIELD3",
+				"type": "varchar"
+			},
+			{
+				"name": "STATUS",
+				"type": "varchar"
+			},
+			{
+				"name": "LAST_UPD_USER_ID",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "LAST_UPD_DATETIME",
+				"type": "datetime2",
+				"scale": 6
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "EI_EQUIP_CLASS"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_syncCmrequest",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_SyncCmRequest",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addminutes(trigger().scheduledTime, -3)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 3,
+				"startTime": "2020-04-08T07:03:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

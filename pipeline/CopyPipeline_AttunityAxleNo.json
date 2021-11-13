@@ -1,0 +1,111 @@
+{
+	"name": "CopyPipeline_AttunityAxleNo",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_ab8",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_Axle"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS AxleNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%AXLE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n\n\n",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_Axle"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "AxleNo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AxleNo",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_ab8",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_ab8",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS AxleNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%AXLE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n\n\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_ab8",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-04-29T10:13:23Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

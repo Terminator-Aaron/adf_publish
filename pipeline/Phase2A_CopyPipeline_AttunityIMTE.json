@@ -1,0 +1,161 @@
+{
+	"name": "Phase2A_CopyPipeline_AttunityIMTE",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_j47",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_IMTE"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "WITH CTE1 AS (\n  SELECT\n    V.EQUIP_NO,\n    V.EQUIP_CLASS_CD,\n    V.EQUIP_DESP, \n    V.EQUIP_CLASS_DESP, \n    E.EQUIP_ID\n  FROM\n    xls_v_Equipment_Registration V\n    inner join EI_EQUIPMENT E on E.EQUIP_NO = V.EQUIP_NO\n  WHERE\n    (\n      (\n        V.EQUIP_CLASS_CD LIKE 'MST%'\n        AND V.EQUIP_NO LIKE 'EI%'\n      )\n      OR (\n        V.EQUIP_CLASS_CD LIKE 'MSI%'\n        AND (\n          V.EQUIP_NO LIKE 'WIX%'\n          OR V.EQUIP_NO LIKE 'WIY%'\n        )\n      )\n    )\n), CTE2 AS (\n  SELECT \n    MIN(W.PLAN_START_DATE) AS PLAN_START_DATE, \n    W.EQUIP_ID\n  FROM\n    WM_WORK_ORDER W \n    left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\n    inner join CTE1 C1 on C1.EQUIP_ID = W.EQUIP_ID\n  WHERE\n    W.CREATE_DATE >= DATEADD(MONTH, -12, GETDATE())\n    and S.WK_GRP_ID in (\n      SELECT\n        WK_GRP_ID \n      FROM \n        SA_WORK_GRP \n      WHERE \n        WK_GRP_CD like 'MR%'\n    )\n    and W.STATUS = 'OP'\n    --and W.PLAN_START_DATE >= GETDATE()\n  GROUP BY\n    W.EQUIP_ID\n)\nSELECT\n  C1.*, \n  C2.PLAN_START_DATE\nFROM\n  CTE1 C1 \n  left join CTE2 C2 on C2.EQUIP_ID = C1.EQUIP_ID\nWHERE\nC1.EQUIP_NO is not null\nORDER BY\n  C1.EQUIP_NO",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table [dbo].[Attunity_IMTE]"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EQUIP_NO",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EQUIP_NO",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_CLASS_DESP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_DESP",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_ID",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "EQUIP_ID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "PLAN_START_DATE",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "PLAN_START_DATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_DESP",
+									"type": "String"
+								},
+								"sink": {
+									"name": "EQUIP_DESP",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_j47",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_j47",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "WITH CTE1 AS (\n  SELECT\n    V.EQUIP_NO,\n    V.EQUIP_CLASS_CD,\n    V.EQUIP_DESP, \n    V.EQUIP_CLASS_DESP, \n    E.EQUIP_ID\n  FROM\n    xls_v_Equipment_Registration V\n    inner join EI_EQUIPMENT E on E.EQUIP_NO = V.EQUIP_NO\n  WHERE\n    (\n      (\n        V.EQUIP_CLASS_CD LIKE 'MST%'\n        AND V.EQUIP_NO LIKE 'EI%'\n      )\n      OR (\n        V.EQUIP_CLASS_CD LIKE 'MSI%'\n        AND (\n          V.EQUIP_NO LIKE 'WIX%'\n          OR V.EQUIP_NO LIKE 'WIY%'\n        )\n      )\n    )\n), CTE2 AS (\n  SELECT \n    MIN(W.PLAN_START_DATE) AS PLAN_START_DATE, \n    W.EQUIP_ID\n  FROM\n    WM_WORK_ORDER W \n    left join SA_WORK_GRP S on S.WK_GRP_ID = W.WK_GRP_ID\n    inner join CTE1 C1 on C1.EQUIP_ID = W.EQUIP_ID\n  WHERE\n    W.CREATE_DATE >= DATEADD(MONTH, -12, GETDATE())\n    and S.WK_GRP_ID in (\n      SELECT\n        WK_GRP_ID \n      FROM \n        SA_WORK_GRP \n      WHERE \n        WK_GRP_CD like 'MR%'\n    )\n    and W.STATUS = 'OP'\n    --and W.PLAN_START_DATE >= GETDATE()\n  GROUP BY\n    W.EQUIP_ID\n)\nSELECT\n  C1.*, \n  C2.PLAN_START_DATE\nFROM\n  CTE1 C1 \n  left join CTE2 C2 on C2.EQUIP_ID = C1.EQUIP_ID\nWHERE\nC1.EQUIP_NO is not null\nORDER BY\n  C1.EQUIP_NO",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_j47",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-08-28T09:52:02Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

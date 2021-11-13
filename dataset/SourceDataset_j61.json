@@ -1,0 +1,26 @@
+{
+	"name": "SourceDataset_j61",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "WK_GRP_ID",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			},
+			{
+				"name": "WK_GRP_CD",
+				"type": "nvarchar",
+				"precision": 255,
+				"scale": 255
+			}
+		]
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

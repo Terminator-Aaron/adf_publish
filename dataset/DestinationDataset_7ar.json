@@ -1,0 +1,54 @@
+{
+	"name": "DestinationDataset_7ar",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Phase2B_SQL_Server_SIT",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "ID",
+				"type": "int",
+				"precision": 10,
+				"scale": 0
+			},
+			{
+				"name": "EQUIP_CLASS_ID",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "EQUIP_CLASS_CD",
+				"type": "nchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "TYPE",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "CODE",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			},
+			{
+				"name": "DESP",
+				"type": "nvarchar",
+				"precision": 0,
+				"scale": 0
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "Attunity_EquipmentClassAssocCode"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

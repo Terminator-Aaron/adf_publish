@@ -1,0 +1,111 @@
+{
+	"name": "CopyPipeline_AttuntiyBogieNo",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_2pp",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_Bogie"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS BogieNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%BOGIE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_Bogie"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "BogieNo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "BogieNo",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_2pp",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_2pp",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT DISTINCT(EQUIP_NO) AS BogieNo FROM \n\nEI_EQUIPMENT E1 \n\nLEFT JOIN EI_EQUIP_CLASS E2 on E2.EQUIP_CLASS_ID = E1.EQUIP_CLASS_ID\n\nWHERE EQUIP_CLASS_CD LIKE '%BOGIE%'\n\nAND EQUIP_CLASS_CD LIKE 'EMUYS-%' \n\nORDER BY EQUIP_NO\n",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_2pp",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-05-04T06:20:43Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

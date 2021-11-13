@@ -1,0 +1,17 @@
+{
+	"name": "Common Server",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "FileServer",
+		"typeProperties": {
+			"host": "\\\\Twdsmda201v\\smdm",
+			"userId": "mtrcorp\\smdtintf",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI5NWExM2E4Ni1jMTJlLTQzOTctOGRlMC0wMmE4MmE0ZjA2ZjkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SharedIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

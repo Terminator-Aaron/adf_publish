@@ -1,0 +1,58 @@
+{
+	"name": "Trigger_AttunityMaterData",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_AttunityAxleNo",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "2019-09-09",
+					"windowEnd": "2029-09-09"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_AttunityCarNo",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "2019-09-09",
+					"windowEnd": "2029-09-09"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_AttunityEquipmentNo",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "2019-09-09",
+					"windowEnd": "2029-09-09"
+				}
+			},
+			{
+				"pipelineReference": {
+					"referenceName": "CopyPipeline_AttuntiyBogieNo",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "2019-09-09",
+					"windowEnd": "2029-09-09"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 24,
+				"startTime": "2019-09-09T12:00:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}

@@ -1,0 +1,16 @@
+{
+	"name": "AzureBlobStorageSIT",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureBlobStorage",
+		"typeProperties": {
+			"connectionString": "DefaultEndpointsProtocol=https;AccountName=smdmtrsa201;EndpointSuffix=core.windows.net;",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI2YzA0ZmU4MS1mMzc2LTQ4ODktYmM3YS05MmU1MjQ0NDUwNDkiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "SharedIntegrationRuntime",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

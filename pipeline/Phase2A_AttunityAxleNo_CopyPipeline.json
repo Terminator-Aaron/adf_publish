@@ -1,0 +1,79 @@
+{
+	"name": "Phase2A_AttunityAxleNo_CopyPipeline",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_mwk",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_Axle"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT DISTINCT(E3.EQUIP_NO) AS AxleNo FROM EI_EQUIP_STRT E1,EI_EQUIPMENT E2,EI_EQUIPMENT E3,EI_EQUIP_CLASS E4 WHERE E1.PARENT_EQUIP_ID = E2.EQUIP_ID AND E1.EQUIP_ID = E3.EQUIP_ID AND E4.EQUIP_CLASS_ID = E3.EQUIP_CLASS_ID AND E4.EQUIP_CLASS_CD LIKE 'EMUYS-%' AND E4.EQUIP_CLASS_CD LIKE '%AXLE%'",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_Axle"
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "AxleNo",
+									"type": "String"
+								},
+								"sink": {
+									"name": "AxleNo",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_mwk",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_mwk",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2020-01-11T04:20:29Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

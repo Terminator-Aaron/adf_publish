@@ -1,0 +1,167 @@
+{
+	"name": "CopyPipeline_Attunity_EquipmentClassAssocCode",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy_czo",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Lookup1",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [
+					{
+						"name": "Source",
+						"value": "."
+					},
+					{
+						"name": "Destination",
+						"value": "dbo.Attunity_EquipmentClassAssocCode"
+					}
+				],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT\nE1.EQUIP_CLASS_ID,\nE2.EQUIP_CLASS_CD,\nE1.ITEM_TYPE [TYPE],\nS.CODE ,\nS.DESP,\nNULL as ParentCode\nFROM dbo.EI_EQUIP_CLASS_ITEMS_ASSOC E1\nLEFT OUTER JOIN  dbo.EI_EQUIP_CLASS E2 ON E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\nLEFT OUTER JOIN  dbo.SA_SYS_GENERIC_CODE S ON  E1.GC_ITEM_CD = S.CODE AND E1.ITEM_TYPE  = S.TYPE\nWHERE ITEM_TYPE in ( 'IMPACT_CODE','FAILURE_SYMPTOM_CODE','FAILURE_CONSEQUENCE_CODE','FAILURE_CODE','FAILURE_CAUSE_CODE','FAILURE_ACTION_CODE','COMPONENT_CODE') and S.STATUS = 1\nand E1.EQUIP_CLASS_ID is not null",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "AzureSqlSink",
+						"preCopyScript": "truncate table dbo.Attunity_EquipmentClassAssocCode"
+					},
+					"enableStaging": false,
+					"validateDataConsistency": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "EQUIP_CLASS_ID",
+									"type": "Int64",
+									"physicalType": "bigint"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_ID",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "EQUIP_CLASS_CD",
+									"type": "String",
+									"physicalType": "nchar"
+								}
+							},
+							{
+								"source": {
+									"name": "TYPE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "TYPE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "CODE",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							},
+							{
+								"source": {
+									"name": "DESP",
+									"type": "String",
+									"physicalType": "nvarchar"
+								},
+								"sink": {
+									"name": "DESP",
+									"type": "String",
+									"physicalType": "nvarchar"
+								}
+							}
+						],
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SourceDataset_Attunity_EquipmentClassAssocCode",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DestinationDataset_Attunity_EquipmentClassAssocCode",
+						"type": "DatasetReference"
+					}
+				]
+			},
+			{
+				"name": "Lookup1",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "SELECT\nE1.EQUIP_CLASS_ID,\nE2.EQUIP_CLASS_CD,\nE1.ITEM_TYPE [TYPE],\nS.CODE ,\nS.DESP,\nNULL as ParentCode\nFROM dbo.EI_EQUIP_CLASS_ITEMS_ASSOC E1\nLEFT OUTER JOIN  dbo.EI_EQUIP_CLASS E2 ON E1.EQUIP_CLASS_ID = E2.EQUIP_CLASS_ID\nLEFT OUTER JOIN  dbo.SA_SYS_GENERIC_CODE S ON  E1.GC_ITEM_CD = S.CODE AND E1.ITEM_TYPE  = S.TYPE\nWHERE ITEM_TYPE in ( 'IMPACT_CODE','FAILURE_SYMPTOM_CODE','FAILURE_CONSEQUENCE_CODE','FAILURE_CODE','FAILURE_CAUSE_CODE','FAILURE_ACTION_CODE','COMPONENT_CODE') and S.STATUS = 1\nand E1.EQUIP_CLASS_ID is not null",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SourceDataset_Attunity_EquipmentClassAssocCode",
+						"type": "DatasetReference"
+					}
+				}
+			}
+		],
+		"parameters": {
+			"windowStart": {
+				"type": "String"
+			},
+			"windowEnd": {
+				"type": "String"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2021-06-22T05:20:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

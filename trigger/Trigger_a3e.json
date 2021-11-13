@@ -1,0 +1,28 @@
+{
+	"name": "Trigger_a3e",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "Phase2A_CopyPipeline_CompleteWO",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"windowStart": "@{addminutes(trigger().scheduledTime, -5)}",
+					"windowEnd": "@trigger().scheduledTime"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Minute",
+				"interval": 5,
+				"startTime": "2020-01-13T09:17:00Z",
+				"timeZone": "UTC"
+			}
+		}
+	}
+}
